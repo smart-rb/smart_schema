@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-module SmartCore::Schema::Structure::KeyControl
+module SmartCore::Schema::KeyControl
   class << self
     # @param key [String, Symbol]
     # @return [String]

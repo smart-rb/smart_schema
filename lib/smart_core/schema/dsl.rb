@@ -10,7 +10,7 @@ module SmartCore::Schema::DSL
     # @api private
     # @since 0.1.0
     def included(base_klass)
-      base_klass.instance_variable_set(:@__schema_constructor__, SmartCore::Schema::Constructor.new)
+      base_klass.instance_variable_set(:@__schema_checker__, SmartCore::Schema::Checker.new)
       base_klass.extend(ClassMethods)
       base_klass.singleton_class.prepend(ClassInheritance)
     end
@@ -26,8 +26,8 @@ module SmartCore::Schema::DSL
     # @since 0.1.0
     def inherited(child_klass)
       child_klass.instance_variable_set(
-        :@__schema_constructor__,
-        SmartCore::Schema::Constructor.new.combine_with(__schema_constructor__)
+        :@__schema_checker__,
+        SmartCore::Schema::Checker.new.combine_with(__schema_checker__)
       )
       child_klass.singleton_class.prepend(ClassInheritance)
       super
@@ -37,12 +37,12 @@ module SmartCore::Schema::DSL
   # @api private
   # @since 0.1.0
   module ClassMethods
-    # @return [SmartCore::Schema::Constructor]
+    # @return [SmartCore::Schema::Checker]
     #
     # @api private
     # @since 0.1.0
-    def __schema_constructor__
-      @__schema_constructor__
+    def __schema_checker__
+      @__schema_checker__
     end
 
     # @param definitions [Block]
@@ -51,11 +51,11 @@ module SmartCore::Schema::DSL
     # @api public
     # @since 0.1.0
     def schema(&definitions)
-      __schema_constructor__.append_schema_definitions(&definitions)
+      __schema_checker__.append_schema_definitions(&definitions)
     end
 
     # @param schema_key [String, Symbol]
-    # @param validator [SmartCore::Schema::Constructor::EmptyValue, Class<?>]
+    # @param validator [SmartCore::Schema::Checker::EmptyValue, Class<?>]
     # @param validation [Block]
     # @return [void]
     #
@@ -63,14 +63,14 @@ module SmartCore::Schema::DSL
     # @since 0.1.0
     def validate(
       schema_key,
-      validator_klass = SmartCore::Schema::Constructor::EmptyValue,
+      validator_klass = SmartCore::Schema::Checker::EmptyValue,
       &validation
     )
-      __schema_constructor__.define_validator(schema_key, validator_klass, &validation)
+      __schema_checker__.define_validator(schema_key, validator_klass, &validation)
     end
 
     # @param schema_key [String, Symbol]
-    # @param value [SmartCore::Schema::Constructor::EmptyValue, Any]
+    # @param value [SmartCore::Schema::Checker::EmptyValue, Any]
     # @param expression [Block]
     # @return [void]
     #
@@ -78,10 +78,10 @@ module SmartCore::Schema::DSL
     # @since 0.1.0
     def default(
       schema_key,
-      value = SmartCore::Schema::Constructor::EmptyValue,
+      value = SmartCore::Schema::Checker::EmptyValue,
       &expression
     )
-      __schema_constructor__.set_default_value(schema_key, value, &expression)
+      __schema_checker__.set_default_value(schema_key, value, &expression)
     end
 
     # @param schema_key [String, Symbol]
@@ -93,7 +93,7 @@ module SmartCore::Schema::DSL
     # @api public
     # @since 0.1.0
     def finalize(schema_key, &expression)
-      __schema_constructor__.set_value_finalizer(schema_key, &expression)
+      __schema_checker__.set_value_finalizer(schema_key, &expression)
     end
   end
 end

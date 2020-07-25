@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-module SmartCore::Schema::Constructor::Commands
+module SmartCore::Schema::Checker::Commands
   class Validate < Base
     # @return [String]
     #
@@ -10,7 +10,7 @@ module SmartCore::Schema::Constructor::Commands
     # @since 0.1.0
     attr_reader :schema_key
 
-    # @return [SmartCore::Schema::Constructor::EmptyValue, Class<?>]
+    # @return [SmartCore::Schema::Checker::EmptyValue, Class<?>]
     #
     # @api private
     # @since 0.1.0
@@ -23,7 +23,7 @@ module SmartCore::Schema::Constructor::Commands
     attr_reader :validation
 
     # @param schema_key [String]
-    # @param validator_klass [SmartCore::Schema::Constructor::EmptyValue, Class<?>]
+    # @param validator_klass [SmartCore::Schema::Checker::EmptyValue, Class<?>]
     # @param validation [Proc]
     # @return [void]
     #

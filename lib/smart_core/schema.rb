@@ -10,8 +10,8 @@ module SmartCore
   class Schema
     require_relative 'schema/version'
     require_relative 'schema/errors'
-    require_relative 'schema/structure'
-    require_relative 'schema/constructor'
+    require_relative 'schema/key_control'
+    require_relative 'schema/checker'
     require_relative 'schema/dsl'
 
     # @since 0.1.0

@@ -2,13 +2,19 @@
 
 # @api private
 # @since 0.1.0
-module SmartCore::Schema::Constructor::Commands
-  class Finalize < Base
+module SmartCore::Schema::Checker::Commands
+  class Default < Base
     # @return [String]
     #
     # @api private
     # @since 0.1.0
     attr_reader :schema_key
+
+    # @return [SmartCore::Schema::Checker::EmptyValue, Any]
+    #
+    # @api private
+    # @since 0.1.0
+    attr_reader :default_value
 
     # @return [Proc]
     #
@@ -17,13 +23,15 @@ module SmartCore::Schema::Constructor::Commands
     attr_reader :expression
 
     # @param schema_key [String]
+    # @param default_value [SmartCore::Schema::Checker::EmptyValue, Any]
     # @param expression [Proc]
     # @return [void]
     #
     # @api private
     # @since 0.1.0
-    def initialize(schema_key, expression)
+    def initialize(schema_key, default_value, expression)
       @schema_key = schema_key
+      @default_value = default_value
       @expression = expression
     end
   end

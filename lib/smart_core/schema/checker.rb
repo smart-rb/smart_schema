@@ -2,8 +2,8 @@
 
 # @api private
 # @since 0.1.0
-class SmartCore::Schema::Constructor
-  require_relative 'constructor/commands'
+class SmartCore::Schema::Checker
+  require_relative 'checker/commands'
 
   # @return [Class<BasicObject>]
   #
@@ -33,7 +33,7 @@ class SmartCore::Schema::Constructor
   end
 
   # @param schema_key [String, Symbol]
-  # @param validator_klass [SmartCore::Schema::Constructor::EmptyValue, Class<?>]
+  # @param validator_klass [SmartCore::Schema::Checker::EmptyValue, Class<?>]
   # @param validation [Block]
   # @return [void]
   #
@@ -44,7 +44,7 @@ class SmartCore::Schema::Constructor
   end
 
   # @param schema_key [String, Symbol]
-  # @param default_value [SmartCore::Schema::Constructor::EmptyValue, Any]
+  # @param default_value [SmartCore::Schema::Checker::EmptyValue, Any]
   # @param expression [Block]
   # @return [void]
   #
@@ -64,36 +64,36 @@ class SmartCore::Schema::Constructor
     thread_safe { add_finalize_command(schema_key, &expression) }
   end
 
-  # @param another_constructor [SmartCore::Schema::Constructor]
-  # @return [SmartCore::Schema::Constructor]
+  # @param another_checker [SmartCore::Schema::Checker]
+  # @return [SmartCore::Schema::Checker]
   #
   # @api private
   # @since 0.1.0
-  def combine_with(another_constructor)
+  def combine_with(another_checker)
     thread_safe { self } # TODO: merge definitions and return self
   end
 
   private
 
-  # @return [Array<SmartCore::Schema::Constructor::Commands::Schema>]
+  # @return [Array<SmartCore::Schema::Checker::Commands::Schema>]
   #
   # @api private
   # @since 0.1.0
   attr_reader :schema_definitions
 
-  # @return [Hash<String,SmartCore::Schema::Constructor::Commands::Default>]
+  # @return [Hash<String,SmartCore::Schema::Checker::Commands::Default>]
   #
   # @api private
   # @since 0.1.0
   attr_reader :defaults
 
-  # @return [Hash<String,SmartCore::Schema::Constructor::Commands::Validate>]
+  # @return [Hash<String,SmartCore::Schema::Checker::Commands::Validate>]
   #
   # @api private
   # @since 0.1.0
   attr_reader :validators
 
-  # @return [Hash<String,SmartCore::Schema::Constructor::Commands::Finalize>]
+  # @return [Hash<String,SmartCore::Schema::Checker::Commands::Finalize>]
   #
   # @api private
   # @since 0.1.0
@@ -109,11 +109,11 @@ class SmartCore::Schema::Constructor
       Schema definitions is not provided (you should provide Block argument)
     ERROR_MESSAGE
 
-    schema_definitions << SmartCore::Schema::Constructor::Commands::Schema.new(definitions)
+    schema_definitions << SmartCore::Schema::Checker::Commands::Schema.new(definitions)
   end
 
   # @param schema_key [String, Symbol]
-  # @param validator_klass [SmartCore::Schema::Constructor::EmptyValue, Class<?>]
+  # @param validator_klass [SmartCore::Schema::Checker::EmptyValue, Class<?>]
   # @param validation [Block]
   # @return [void]
   #
@@ -133,15 +133,15 @@ class SmartCore::Schema::Constructor
     raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE) unless validation
     ERROR_MESSAGE
 
-    normalized_schema_key = SmartCore::Schema::Structure::KeyControl.normalize(schema_key)
+    normalized_schema_key = SmartCore::Schema::KeyControl.normalize(schema_key)
 
-    validators[normalized_schema_key] = SmartCore::Schema::Constructor::Commands::Validate.new(
+    validators[normalized_schema_key] = SmartCore::Schema::Checker::Commands::Validate.new(
       normalized_schema_key, validator_klass, validation
     )
   end
 
   # @param schema_key [String, Symbol]
-  # @param default_value [SmartCore::Schema::Constructor::EmptyValue, Any]
+  # @param default_value [SmartCore::Schema::Checker::EmptyValue, Any]
   # @param expression [Block]
   # @return [void]
   #
@@ -156,9 +156,9 @@ class SmartCore::Schema::Constructor
     raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE) unless expression
     ERROR_MESSAGE
 
-    normalized_schema_key = SmartCore::Schema::Structure::KeyControl.normalize(schema_key)
+    normalized_schema_key = SmartCore::Schema::KeyControl.normalize(schema_key)
 
-    defaults[normalized_schema_key] = SmartCore::Schema::Constructor::Commands::Default.new(
+    defaults[normalized_schema_key] = SmartCore::Schema::Checker::Commands::Default.new(
       normalized_schema_key, default_value, expression
     )
   end
@@ -178,9 +178,9 @@ class SmartCore::Schema::Constructor
     raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE) unless expression
     ERROR_MESSAGE
 
-    normalized_schema_key = SmartCore::Schema::Structure::KeyControl.normalize(schema_key)
+    normalized_schema_key = SmartCore::Schema::KeyControl.normalize(schema_key)
 
-    defaults[normalized_schema_key] = SmartCore::Schema::Constructor::Commands::Finalize.new(
+    defaults[normalized_schema_key] = SmartCore::Schema::Checker::Commands::Finalize.new(
       normalized_schema_key, expression
     )
   end

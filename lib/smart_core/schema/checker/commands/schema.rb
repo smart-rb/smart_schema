@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-module SmartCore::Schema::Constructor::Commands
+module SmartCore::Schema::Checker::Commands
   class Schema < Base
     # @return [Proc]
     #
