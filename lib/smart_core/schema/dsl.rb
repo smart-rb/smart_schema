@@ -3,14 +3,6 @@
 # @api private
 # @since 0.1.0
 module SmartCore::Schema::DSL
-  require_relative 'dsl/commands'
-
-  # @return [NilClass]
-  #
-  # @api private
-  # @since 0.1.0
-  NO_VALIDATOR_CLASS = nil
-
   class << self
     # @param base_klass [Class]
     # @return [void]
@@ -63,7 +55,7 @@ module SmartCore::Schema::DSL
     end
 
     # @param schema_key [String, Symbol]
-    # @param validator [SmartCore::Schema::Constructor::EmptyValue, Class<???>]
+    # @param validator [SmartCore::Schema::Constructor::EmptyValue, Class<?>]
     # @param validation [Block]
     # @return [void]
     #

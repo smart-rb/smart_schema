@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-module SmartCore::Schema::DSL::Commands
+module SmartCore::Schema::Constructor::Commands
   require_relative 'commands/base'
   require_relative 'commands/schema'
   require_relative 'commands/default'

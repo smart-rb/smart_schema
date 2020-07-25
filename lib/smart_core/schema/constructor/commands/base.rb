@@ -2,5 +2,5 @@
 
 # @api private
 # @since 0.1.0
-class SmartCore::Schema::DSL::Commands::Base
+class SmartCore::Schema::Constructor::Commands::Base
 end
