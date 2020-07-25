@@ -3,7 +3,9 @@
 # @api private
 # @since 0.1.0
 class SmartCore::Schema::Checker
+  require_relative 'checker/rules'
   require_relative 'checker/commands'
+  require_relative 'checker/reconciler'
 
   # @return [Class<BasicObject>]
   #
@@ -120,10 +122,7 @@ class SmartCore::Schema::Checker
   # @api private
   # @since 0.1.0
   def add_validate_command(schema_key, validator_klass, &validation)
-    unless schema_key.is_a?(String) || schema_key.is_a?(Symbol)
-      raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE)
-      ERROR_MESSAGE
-    end
+    SmartCore::Schema::KeyControl.prevent_incompatible!(schema_key)
 
     if validator_klass != EmptyValue && !validator_klass.is_a?(::Class) # TODO: Validator class
       raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE)
@@ -148,10 +147,7 @@ class SmartCore::Schema::Checker
   # @api private
   # @since 0.1.0
   def add_default_command(schema_key, default_value, &expression)
-    unless schema_key.is_a?(String) || schema_key.is_a?(Symbol)
-      raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE)
-      ERROR_MESSAGE
-    end
+    SmartCore::Schema::KeyControl.prevent_incompatible!(schema_key)
 
     raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE) unless expression
     ERROR_MESSAGE
@@ -170,10 +166,7 @@ class SmartCore::Schema::Checker
   # @api private
   # @since 0.1.0
   def add_finalize_command(schema_key, &expression)
-    unless schema_key.is_a?(String) || schema_key.is_a?(Symbol)
-      raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE)
-      ERROR_MESSAGE
-    end
+    SmartCore::Schema::KeyControl.prevent_incompatible!(schema_key)
 
     raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE) unless expression
     ERROR_MESSAGE
