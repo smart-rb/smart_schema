@@ -1,7 +1,8 @@
 PATH
   remote: .
   specs:
-    smart_schema (0.1.0)
+    smart_schema (0.0.0)
+      smart_engine (~> 0.8)
 
 GEM
   remote: https://rubygems.org/
@@ -72,6 +73,7 @@ GEM
       docile (~> 1.1)
       simplecov-html (~> 0.11)
     simplecov-html (0.12.2)
+    smart_engine (0.8.0)
     thread_safe (0.3.6)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
