@@ -15,6 +15,8 @@ module SmartCore::Schema::Checker::Reconciler::Factory
         # если при конструировании реконсайлера евалом дефинишнов будут вылетать эксепшны вида
         # NoMethodError саомго реконсайлера (из-за отсутствуюещго левого метода вызываемого
         # евалом на инстансе реконсайлера) - перехватывать как schema definition error-эксепшн
+        #
+        # семантика здесь InvaludSchemaRuleError
       end
     end
   end

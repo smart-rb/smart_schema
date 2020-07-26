@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'smart_core'
+require 'smart_core/types'
 
 # @api pulic
 # @since 0.1.0
@@ -17,25 +18,37 @@ module SmartCore
     # @since 0.1.0
     include SmartCore::Schema::DSL
 
-    # @param schema [Hash]
+    # @param verifiable_hash [Hash<String|Symbol,Any>]
     # @return [Boolean]
     #
     # @api public
     # @since 0.1.0
-    def valid?(schema)
-      validate!(schema)
+    def valid?(verifiable_hash)
+      validate!(verifiable_hash)
       true
-    rescue # => ???
+    rescue # ErrorClass?
       false
     end
 
-    # @param schema [Hash]
+    # @param verifiable_hash [Hash<String|Symbol,Any>]
     # @return [void]
     #
-    # @raise [???]
+    # @raise [?]
     #
     # @api public
     # @since 0.1.0
-    def validate!(schema); end
+    def validate!(verifiable_hash)
+      schema_checker.check!(verifiable_hash)
+    end
+
+    private
+
+    # @return [SmartCore::Schema::Checker]
+    #
+    # @api private
+    # @since 0.1.0
+    def schema_checker
+      self.class.__schema_checker__
+    end
   end
 end

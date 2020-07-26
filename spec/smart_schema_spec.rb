@@ -9,20 +9,26 @@ RSpec.describe SmartCore::Schema do
     class MySchema < SmartCore::Schema
       schema do
         required(:key) do
-          optional(:data).type(:string).finalize { |val| }
+          optional(:data).type(:string) # .finalize { |val| } (0.2.0)
           optional(:value).type(:numeric)
-          required(:name).type(:string).default('lol').finalize { |val| }
+          required(:name).type(:string) # .default('lol').finalize { |val| } (0.2.0)
         end
+
+        # @since 0.3.0
+        # required(:another_key).schema(AnotherSchema)
       end
 
-      validate('key.name') do
-      end
+      # @since 0.2.0
+      # validate('key.name') do
+      # end
 
-      default('key.data') do
-      end
+      # @since 0.2.0
+      # default('key.data') do
+      # end
 
-      finalize('key.data') do |value|
-      end
+      # @since 0.2.0
+      # finalize('key.data') do |value|
+      # end
     end
 
     MySchema.new.valid?({

@@ -13,13 +13,13 @@ module SmartCore::Schema::Checker::Commands
       @reconciler = SmartCore::Schema::Checker::Reconciler.create(definitions)
     end
 
-    # @param hash_struct [Hash<String|Symbol,Any>]
-    # @oaram schema [SmartCore::Schema]
+    # @param verifiable_hash [Hash<String|Symbol,Any>]
     # @return [?]
     #
     # @api private
     # @since 0.1.0
-    def call(hash_struct, schema)
+    def call(verifiable_hash)
+      reconciler.__collate!(verifiable_hash)
     end
 
     private
