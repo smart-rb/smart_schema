@@ -12,6 +12,20 @@ class SmartCore::Schema::Checker::Rules::Options::Type
     @type = resolve_required_type(required_type)
   end
 
+  # @param schema_key [String]
+  # @param schema_value [Any]
+  # @return [?]
+  #
+  # @api private
+  # @since 0.1.0
+  def validate(schema_key, schema_value)
+    if type.valid?(schema_value)
+      SmartCore::Schema::Checker::Result::PreSuccess.new(schema_key, schema_value)
+    else
+      SmartCore::Schema::Checker::Result::PreFailure.new(schema_key, schema_value, :invalid_type)
+    end
+  end
+
   private
 
   # @return [SmartCore::Types::Primitive]

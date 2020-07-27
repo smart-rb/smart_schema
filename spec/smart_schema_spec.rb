@@ -31,9 +31,11 @@ RSpec.describe SmartCore::Schema do
       # end
     end
 
-    MySchema.new.valid?({
+    resu = MySchema.new.valid?({
 
     })
+
+    binding.irb
 
     # =>
     # {

@@ -25,9 +25,9 @@ module SmartCore
     # @since 0.1.0
     def valid?(verifiable_hash)
       validate!(verifiable_hash)
-      true
-    rescue # ErrorClass?
-      false
+      # true
+    # rescue # ErrorClass?
+    #   false
     end
 
     # @param verifiable_hash [Hash<String|Symbol,Any>]

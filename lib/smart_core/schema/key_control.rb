@@ -10,6 +10,7 @@ module SmartCore::Schema::KeyControl
     # @api private
     # @since 0.1.0
     def normalize(key)
+      prevent_incompatible!(key)
       key.to_s
     end
 

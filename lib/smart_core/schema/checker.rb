@@ -6,6 +6,7 @@ class SmartCore::Schema::Checker
   require_relative 'checker/rules'
   require_relative 'checker/commands'
   require_relative 'checker/reconciler'
+  require_relative 'checker/result'
 
   # @return [BasicObject]
   #
@@ -26,12 +27,14 @@ class SmartCore::Schema::Checker
   end
 
   # @param verifiable_hash [Hash<String|Symbol,Any>]
-  # @return [void]
+  # @return [?]
   #
   # @api private
   # @since 0.1.0
   def check!(verifiable_hash)
-    schema_definitions.each { |schema_definition| schema_definition.call(verifiable_hash) }
+    schema_definitions.each do |schema_definition|
+      schema_definition.call(verifiable_hash)
+    end
   end
 
   # @param definitions [Block]

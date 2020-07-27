@@ -7,6 +7,7 @@ class SmartCore::Schema::Checker::Rules
   require_relative 'rules/optional'
   require_relative 'rules/required'
   require_relative 'rules/options'
+  require_relative 'rules/verifier'
 
   # @since 0.1.0
   include Enumerable
@@ -60,6 +61,23 @@ class SmartCore::Schema::Checker::Rules
   def initialize
     @rules = {}
     @lock = SmartCore::Engine::Lock.new
+  end
+
+  # @param schema_key [String]
+  # @return [SmartCore::Schema::Checker::Rules::Base]
+  #
+  # @api private
+  # @since 0.1.0
+  def [](schema_key)
+    thread_safe do
+      begin
+        rules.fetch(schema_key)
+      rescue KeyError
+        raise(SmartCore::Schema::UnaccceptableSchemaKeyError, <<~ERROR_MESSAGE)
+          TODO: нормальный эррор-меседж что ключ не описа в схеме
+        ERROR_MESSAGE
+      end
+    end
   end
 
   # @param schema_key [String]
