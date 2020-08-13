@@ -3,19 +3,8 @@
 # @api private
 # @since 0.1.0
 class SmartCore::Schema::Checker::Reconciler
-  require_relative 'reconciler/factory'
-  require_relative 'reconciler/collate'
-
-  class << self
-    # @param definitions [Proc]
-    # @return [SmartCore::Schema::Checker::Reconciler]
-    #
-    # @api private
-    # @since 0.1.0
-    def create(definitions)
-      SmartCore::Schema::Checker::Reconciler::Factory.create(definitions)
-    end
-  end
+  require_relative 'reconciler/constructor'
+  require_relative 'reconciler/matcher'
 
   # @return [void]
   #
@@ -31,8 +20,10 @@ class SmartCore::Schema::Checker::Reconciler
   #
   # @api private
   # @since 0.1.0
-  def __collate!(verifiable_hash)
-    thread_safe { SmartCore::Schema::Checker::Reconciler::Collate.call(verifiable_hash, rules) }
+  def __match!(verifiable_hash)
+    thread_safe do
+      SmartCore::Schema::Checker::Reconciler::Matcher.match(verifiable_hash, rules)
+    end
   end
 
   # @param schema_key [String, Symbol]

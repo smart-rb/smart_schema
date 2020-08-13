@@ -36,21 +36,34 @@ class SmartCore::Schema::Checker::Rules::Base
     define_nested_reconciler(&nested_definitions)
   end
 
-  # @param verifiable_value [Any]
+  # @param verifiable_hash [Hash<String|Symbol,Any>]
+  # @return [SmartCore::Schema::Checker::Rules::Verifier::Result]
   #
   # @api private
   # @since 0.1.0
-  def __verify!(verifiable_value)
-    SmartCore::Schema::Checker::Rules::Verifier.verify!(self, verifiable_value)
+  def __verify!(verifiable_hash)
+    SmartCore::Schema::Checker::Rules::Verifier.verify!(self, verifiable_hash)
   end
 
   # @param required_type [String, Symbol, SmartCore::Types::Primitive]
   # @return [self]
   #
   # @api public
-  # @since 0.1.0s
+  # @since 0.1.0
   def type(required_type)
-    tap { options.type = SmartCore::Schema::Checker::Rules::Options::Type.new(required_type) }
+    tap do
+      options.type = SmartCore::Schema::Checker::Rules::Options::Type.new(required_type)
+    end
+  end
+
+  # @return [self]
+  #
+  # @api ublic
+  # @since 0.1.0
+  def filled
+    tap do
+      options.filled = SmartCore::Schema::Checker::Rules::Options::Filled.new
+    end
   end
 
   private
@@ -61,7 +74,8 @@ class SmartCore::Schema::Checker::Rules::Base
   # @api private
   # @since 0.1.0
   def define_nested_reconciler(&nested_definitions)
-    return unless block_given?
-    @nested_reconciler = SmartCore::Schema::Checker::Reconciler.create(nested_definitions)
+    @nested_reconciler = SmartCore::Schema::Checker::Reconciler::Constructor.create(
+      &nested_definitions
+    ) if block_given?
   end
 end

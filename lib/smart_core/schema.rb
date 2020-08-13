@@ -12,6 +12,7 @@ module SmartCore
     require_relative 'schema/version'
     require_relative 'schema/errors'
     require_relative 'schema/key_control'
+    require_relative 'schema/result'
     require_relative 'schema/checker'
     require_relative 'schema/dsl'
 

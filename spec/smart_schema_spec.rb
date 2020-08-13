@@ -18,6 +18,10 @@ RSpec.describe SmartCore::Schema do
         # required(:another_key).schema(AnotherSchema)
       end
 
+      schema do
+        required(:b_key).type(:string)
+      end
+
       # @since 0.2.0
       # validate('key.name') do
       # end
@@ -31,7 +35,7 @@ RSpec.describe SmartCore::Schema do
       # end
     end
 
-    resu = MySchema.new.valid?({
+    result = MySchema.new.valid?({
 
     })
 

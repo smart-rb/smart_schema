@@ -14,6 +14,15 @@ module SmartCore::Schema::KeyControl
       key.to_s
     end
 
+    # @param keys [Array<String,Symbol>]
+    # @return [Array<String>]
+    #
+    # @api private
+    # @since 0.1.0
+    def normalize_list(keys)
+      keys.map { |key| normalize(key) }
+    end
+
     # @param key [String, Symbol]
     # @return [void]
     #
@@ -22,7 +31,7 @@ module SmartCore::Schema::KeyControl
     def prevent_incompatible!(key)
       unless key.is_a?(String) || key.is_a?(Symbol)
         raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE)
-          Schema key should be a type of string or symbol
+          Schema keys should be a type of string or symbol
         ERROR_MESSAGE
       end
     end

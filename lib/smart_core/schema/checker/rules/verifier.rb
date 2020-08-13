@@ -3,6 +3,8 @@
 # @api private
 # @since 0.1.0
 module SmartCore::Schema::Checker::Rules::Verifier
+  require_relative 'verifier/result'
+
   class << self
     # @param rule [SmartCore::Schema::Checker::Rules::Base]
     # @param verifiable_value [Any]
@@ -11,15 +13,20 @@ module SmartCore::Schema::Checker::Rules::Verifier
     # @api private
     # @since 0.1.0
     def verify!(rule, verifiable_value)
-      verifiable_key = SmartCore::Schema::KeyControl.normalize(verifiable_key)
-
-      result = SmartCore::Schema::Checker::Result::Composite.new
-      result << check_type(rule, verifiable_value)
-      result
+      SmartCore::Schema::Checker::Rules::Verifier::Result.new.tap do |result|
+        result << check_type(rule, verifiable_value)
+      end
     end
 
     private
 
+    # @param rule [SmartCore::Schema::Checker::Rules::Base]
+    # @param verifiable_value [Any]
+    # @return [SmartCore::Schema::Checker::Rules::Result::Success]
+    # @return [SmartCore::Schema::Checker::Rules::Result::Failure]
+    #
+    # @api private
+    # @since 0.1.0
     def check_type(rule, verifiable_value)
       rule.options.type.validate(rule.schema_key, verifiable_value)
     end
