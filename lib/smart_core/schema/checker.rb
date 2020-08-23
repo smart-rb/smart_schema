@@ -3,6 +3,7 @@
 # @api private
 # @since 0.1.0
 class SmartCore::Schema::Checker
+  require_relative 'checker/verifiable_hash'
   require_relative 'checker/rules'
   require_relative 'checker/reconciler'
 
@@ -16,12 +17,12 @@ class SmartCore::Schema::Checker
   end
 
   # @param verifiable_hash [Hash<String|Symbol,Any>]
-  # @return [?]
+  # @return [SmartCore::Schema::Result]
   #
   # @api private
   # @since 0.1.0
   def check!(verifiable_hash)
-    thread_safe { reconciler.__match!(verifiable_hash) }
+    thread_safe { reconciler.__match!(VerifiableHash.new(verifiable_hash)).complete!}
   end
 
   # @param definitions [Block]

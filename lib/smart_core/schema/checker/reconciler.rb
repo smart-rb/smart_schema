@@ -15,15 +15,29 @@ class SmartCore::Schema::Checker::Reconciler
     @lock = SmartCore::Engine::Lock.new
   end
 
-  # @param verifiable_hash [Hash<String|Symbol,Any>]
+  # @param verifiable_hash [SmartCore::Schema::Checker::VerifiableHash]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
   def __match!(verifiable_hash)
-    thread_safe do
-      SmartCore::Schema::Checker::Reconciler::Matcher.match(verifiable_hash, rules)
-    end
+    thread_safe { SmartCore::Schema::Checker::Reconciler::Matcher.match(self, verifiable_hash) }
+  end
+
+  # @return [SmartCore::Schema::Checker::Rules::ExtraKeys]
+  #
+  # @api private
+  # @since 0.1.0
+  def __extra_keys_contract
+    SmartCore::Schema::Checker::Rules::ExtraKeys
+  end
+
+  # @return [SmartCore::Schema::Checker::Rules]
+  #
+  # @api private
+  # @since 0.1.0
+  def __contract_rules
+    thread_safe { rules }
   end
 
   # @param schema_key [String, Symbol]

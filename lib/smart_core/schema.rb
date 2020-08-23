@@ -2,6 +2,7 @@
 
 require 'smart_core'
 require 'smart_core/types'
+require 'set'
 
 # @api pulic
 # @since 0.1.0
@@ -25,20 +26,15 @@ module SmartCore
     # @api public
     # @since 0.1.0
     def valid?(verifiable_hash)
-      validate!(verifiable_hash)
-      # true
-    # rescue # ErrorClass?
-    #   false
+      validate(verifiable_hash).success? ? true : false
     end
 
     # @param verifiable_hash [Hash<String|Symbol,Any>]
-    # @return [void]
-    #
     # @raise [?]
     #
     # @api public
     # @since 0.1.0
-    def validate!(verifiable_hash)
+    def validate(verifiable_hash)
       schema_checker.check!(verifiable_hash)
     end
 

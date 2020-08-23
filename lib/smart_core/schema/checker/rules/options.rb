@@ -7,13 +7,14 @@ class SmartCore::Schema::Checker::Rules::Options
   require_relative 'options/type'
   require_relative 'options/filled'
 
+  # @param rule [SmartCore::Schema::Checker::Rules::Base]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def initialize
-    @type = Empty.new
-    @filled = Empty.new
+  def initialize(rule)
+    @type = Empty.new(rule)
+    @filled = Empty.new(rule)
     @lock = SmartCore::Engine::Lock.new
   end
 

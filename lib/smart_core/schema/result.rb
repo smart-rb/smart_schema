@@ -3,30 +3,48 @@
 # @api private
 # @since 0.1.0
 class SmartCore::Schema::Result
-  # @param schema [Hash<String|Symbol,Any>]
+  # @return [Hash<String,Any>]
+  #
+  # @api public
+  # @since 0.1.0
+  attr_reader :source
+
+  # @return [Hash<String,Array<Symbol>>]
+  #
+  # @api public
+  # @since 0.1.0
+  attr_reader :errors
+
+  # @return [Set<String>]
+  #
+  # @api public
+  # @since 0.1.0
+  attr_reader :extra_keys
+
+  # @param source [Hash<String|Symbol,Any>]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def initialize(schema)
-    @schema = schema
-    @results = []
+  def initialize(source, errors, extra_keys)
+    @source = source
+    @errors = errors
+    @extra_keys = extra_keys
   end
 
-  # @param rule_result [SmartCore::Schema::Checker::Rules::Verifier::Result]
-  # @return [void]
+  # @return [Boolean]
   #
-  # @api private
+  # @api public
   # @since 0.1.0
-  def <<(rule_result)
-    results << rule_result
+  def success?
+    errors.empty? && extra_keys.empty?
   end
 
-  private
-
-  # @return [Array<SmartCore::Schema::Checker::Rule::Verifier::Result>]
+  # @return [Boolean]
   #
-  # @api private
+  # @api public
   # @since 0.1.0
-  attr_reader :results
+  def failure?
+    errors.any? || extra_keys.any?
+  end
 end

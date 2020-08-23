@@ -12,6 +12,7 @@ RSpec.describe SmartCore::Schema do
           optional(:data).type(:string) # .finalize { |val| } (0.2.0)
           optional(:value).type(:numeric)
           required(:name).type(:string) # .default('lol').finalize { |val| } (0.2.0)
+          required(:age).type(:integer)
         end
 
         # @since 0.3.0
@@ -35,11 +36,19 @@ RSpec.describe SmartCore::Schema do
       # end
     end
 
-    result = MySchema.new.valid?({
+    result1 = MySchema.new.validate({})
 
+    result2 = MySchema.new.validate({
+      key: {
+        data: 123,
+        value: 123,
+        name: 'vasia'
+      }
     })
 
-    binding.irb
+    binding.pry
+
+    # binding.irb
 
     # =>
     # {

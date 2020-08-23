@@ -3,42 +3,51 @@
 # @api private
 # @since 0.1.0
 module SmartCore::Schema::Checker::Reconciler::Matcher
+  require_relative 'matcher/result'
+  require_relative 'matcher/result_finalizer'
+
   class << self
-    # @param verifiable_hash [Hash<String|Symbol,Any>]
-    # @param rules [SmartCore::Schema::Checker::Rules]
-    # @return [SmartCore::Schema::Result]
+    # @param reconciler [SmartCore::Schema::Checker::Reconciler]
+    # @param verifiable_hash [SmartCore::Schema::Checker::VerifiableHash]
+    # @return [SmartCore::Schema::Checker::Reconciler::Matcher::Result]
     #
     # @api private
     # @since 0.1.0
-    def match(verifiable_hash, rules)
-      SmartCore::Schema::Result.new(verifiable_hash).tap do |result|
-        match_for_schema_keys(verifiable_hash, rules, result)
-        match_for_extra_keys(verifiable_hash, rules, result)
+    def match(reconciler, verifiable_hash)
+      Result.new(verifiable_hash).tap do |result|
+        match_for_contract_keys(reconciler, verifiable_hash, result)
+        match_for_extra_keys(reconciler, verifiable_hash, result)
       end
     end
 
     private
 
-    # @param verifiable_hash [Hash<String|Symbol,Any>]
-    # @param rules [SmartCore::Schema::Checker::Rules]
-    # @param result [SmartCore::Schema::Result]
+    # @param reconciler [SmartCore::Schema::Checker::Reconciler]
+    # @param verifiable_hash [SmartCore::Schema::Checker::VerifiableHash]
+    # @param result [SmartCore::Schema::Checker::Reconciler::Matcher::Result]
     # @return [void]
     #
     # @api private
     # @since 0.1.0
-    def match_for_schema_keys(verifiable_hash, rules, result)
-      rules.each_rule { |rule| result << rule.__verify!(verifiable_hash) }
+    def match_for_contract_keys(reconciler, verifiable_hash, result)
+      reconciler.__contract_rules.each_rule do |rule|
+        verification_result = rule.__verify!(verifiable_hash)
+        result.contract_key_result(verification_result)
+      end
     end
 
-    # @param verifiable_hash [Hash<String|Symbol,Any>]
-    # @param rules [SmartCore::Schema::Checker::Rules]
-    # @param result [SmartCore::Schema::Result]
+    # @param reconciler [SmartCore::Schema::Checker::Reconciler]
+    # @param verifiable_hash [SmartCore::Schema::Checker::VerifiableHash]
+    # @param result [SmartCore::Schema::Checker::Reconciler::Matcher::Result]
     # @return [void]
     #
     # @api private
     # @since 0.1.0
-    def match_for_extra_keys(verifiable_hash, rules, result)
-      result << SmartCore::Schema::Checker::Rules::ExtraKeys.__verify!(verifiable_hash, rules)
+    def match_for_extra_keys(reconciler, verifiable_hash, result)
+      verification_result = reconciler.__extra_keys_contract.__verify!(
+        verifiable_hash, reconciler.__contract_rules
+      )
+      result.extra_keys_result(verification_result)
     end
   end
 end

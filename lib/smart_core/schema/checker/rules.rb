@@ -5,10 +5,12 @@
 class SmartCore::Schema::Checker::Rules
   require_relative 'rules/type_aliases'
   require_relative 'rules/base'
+  require_relative 'rules/result'
   require_relative 'rules/optional'
   require_relative 'rules/required'
   require_relative 'rules/extra_keys'
   require_relative 'rules/options'
+  require_relative 'rules/requirement'
   require_relative 'rules/verifier'
 
   # @since 0.1.0
@@ -29,6 +31,7 @@ class SmartCore::Schema::Checker::Rules
   # @api private
   # @since 0.1.0
   def [](schema_key)
+    # rubocop:disable Style/RedundantBegin
     thread_safe do
       begin
         rules.fetch(schema_key)
@@ -38,6 +41,7 @@ class SmartCore::Schema::Checker::Rules
         ERROR_MESSAGE
       end
     end
+    # rubocop:enable Style/RedundantBegin
   end
 
   # @param schema_key [String]
@@ -81,7 +85,7 @@ class SmartCore::Schema::Checker::Rules
     thread_safe { rules.keys }
   end
 
-  protected
+  protected # TODO: видимо, протектед уже не нужен
 
   # @return [Hash<String,SmartCore::Schema::Checker::Rules::Base>]
   #

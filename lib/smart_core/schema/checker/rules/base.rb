@@ -28,13 +28,15 @@ class SmartCore::Schema::Checker::Rules::Base
   # @api private
   # @since 0.1.0
   def initialize(schema_key, &nested_definitions)
-    # NOTE: technical options
     @schema_key = SmartCore::Schema::KeyControl.normalize(schema_key)
+    @options = SmartCore::Schema::Checker::Rules::Options.new(self)
     @nested_reconciler = nil
-    # NOTE: rule options
-    @options = SmartCore::Schema::Checker::Rules::Options.new
     define_nested_reconciler(&nested_definitions)
   end
+
+  # @!method requirement
+  #   @return [SmartCore::Schema::Checker::Rules::Requirement::Optional]
+  #   @return [SmartCore::Schema::Checker::Rules::Requirement::Required]
 
   # @param verifiable_hash [Hash<String|Symbol,Any>]
   # @return [SmartCore::Schema::Checker::Rules::Verifier::Result]
@@ -52,7 +54,7 @@ class SmartCore::Schema::Checker::Rules::Base
   # @since 0.1.0
   def type(required_type)
     tap do
-      options.type = SmartCore::Schema::Checker::Rules::Options::Type.new(required_type)
+      options.type = SmartCore::Schema::Checker::Rules::Options::Type.new(self, required_type)
     end
   end
 
@@ -62,7 +64,7 @@ class SmartCore::Schema::Checker::Rules::Base
   # @since 0.1.0
   def filled
     tap do
-      options.filled = SmartCore::Schema::Checker::Rules::Options::Filled.new
+      options.filled = SmartCore::Schema::Checker::Rules::Options::Filled.new(self)
     end
   end
 
