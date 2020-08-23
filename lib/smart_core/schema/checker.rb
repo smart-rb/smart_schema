@@ -22,7 +22,7 @@ class SmartCore::Schema::Checker
   # @api private
   # @since 0.1.0
   def check!(verifiable_hash)
-    thread_safe { reconciler.__match!(VerifiableHash.new(verifiable_hash)).complete!}
+    thread_safe { reconciler.__match!(VerifiableHash.new(verifiable_hash)).complete! }
   end
 
   # @param definitions [Block]

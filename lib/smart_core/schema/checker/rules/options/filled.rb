@@ -43,7 +43,7 @@ class SmartCore::Schema::Checker::Rules::Options
     # @api private
     # @since 0.1.0
     def non_filled?(value)
-      schema_value == nil
+      value == nil
     end
   end
 end

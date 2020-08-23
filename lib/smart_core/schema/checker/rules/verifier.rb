@@ -18,8 +18,8 @@ module SmartCore::Schema::Checker::Rules::Verifier
         next result if requirement.required? && requirement.failure?
         next result if requirement.optional? && requirement.success? && !requirement.key_exists?
         result << check_type(rule, verifiable_hash)
-        result << check_filled(rule, verifiable_hash)
-        result << check_nested(rule, verifiable_hash)
+        filled = result << check_filled(rule, verifiable_hash)
+        result << check_nested(rule, verifiable_hash) if filled.success?
       end
     end
 
