@@ -26,7 +26,7 @@ module SmartCore
     # @api public
     # @since 0.1.0
     def valid?(verifiable_hash)
-      validate(verifiable_hash).success? ? true : false
+      validate(verifiable_hash).success?
     end
 
     # @param verifiable_hash [Hash<String|Symbol,Any>]
