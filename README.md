@@ -1,8 +1,11 @@
 # SmartCore::Schema [![Gem Version](https://badge.fury.io/rb/smart_schema.svg)](https://badge.fury.io/rb/smart_schema) [![Build Status](https://travis-ci.org/smart-rb/smart_schema.svg?branch=master)](https://travis-ci.org/smart-rb/smart_schema)
 
-`SmartCore::Schema` is a structure validation library for `Hash`-like data structures.
+`SmartCore::Schema` is a schema validation library for `Hash`-like data structures.
+
 Provides convenient and concise DSL to define complex schemas in easiest way and public validation interface to achieve a comfortable work with detailed validation result.
+
 Supports nested structures, type validation (via `smart_types`), required- and optional- schema keys, schema value presence validation, schema inheritance, schema extending and schema composition.
+
 Works in predicate style and in OOP/Monadic result object style. Enjoy :)
 
 ## Installation
@@ -29,6 +32,7 @@ require 'smart_core/schema'
 - type validation: `type`;
 - `nil` control: `filled`;
 - nested definitions: `do ... end`;
+- supported types: see `smart_types` gem;
 
 ```ruby
 class MySchema < SmartCore::Schema
@@ -98,8 +102,6 @@ result.errors # =>
   "another_key"=>[:non_filled]
 }
 ```
-
-- supported types: see `smart_types` gem;
 
 ---
 
