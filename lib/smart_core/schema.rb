@@ -30,7 +30,7 @@ module SmartCore
     end
 
     # @param verifiable_hash [Hash<String|Symbol,Any>]
-    # @raise [?]
+    # @return [SmartCore::Schema::Result]
     #
     # @api public
     # @since 0.1.0

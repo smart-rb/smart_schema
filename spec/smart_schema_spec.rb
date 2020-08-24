@@ -14,7 +14,7 @@ RSpec.describe SmartCore::Schema do
           required(:name).type(:string)
           required(:age).type(:integer)
           required(:rizdos) do
-            required(:pui).type(:string)
+            required(:pui).type(SmartCore::Types::Value::String)
             required(:cheburek) do
               required(:jaja).filled
             end
@@ -44,13 +44,23 @@ RSpec.describe SmartCore::Schema do
       end
     end
 
+    # invalid schema
     result1 = MySchema.new.validate({})
 
+    expect(result1.success?).to eq(false)
+    expect(result1.errors).to match(
+      'key'   => [:required_key_not_found],
+      'b_key' => [:required_key_not_found],
+      'c_key' => [:required_key_not_found]
+    )
+    expect(result1.extra_keys).to be_empty
+
+    # invalid schema
     result2 = MySchema.new.validate({
       key: {
         data: 123,
         value: 123,
-        name: 'vasia',
+        name: 'D@iVeR',
         rizdos: { pui: 123, che: true, cheburek: { jaja: nil }, urban_strike: {} },
         cheburek: {},
         urban_strike: {}
@@ -58,6 +68,53 @@ RSpec.describe SmartCore::Schema do
       c_key: { itmo: {} }
     })
 
-    binding.pry
+    expect(result2.success?).to eq(false)
+    expect(result2.errors).to match(
+      'key.data' => [:invalid_type],
+      'key.age' => [:required_key_not_found],
+      'key.rizdos.pui' => [:invalid_type],
+      'key.rizdos.cheburek.jaja' => [:non_filled],
+      'b_key' => [:required_key_not_found],
+      'c_key.itmo.gigabyte' => [:required_key_not_found]
+    )
+    expect(result2.extra_keys).to contain_exactly(
+      'key.cheburek',
+      'key.urban_strike',
+      'key.rizdos.che'
+    )
+
+    # valid state
+    result3 = MySchema.new.validate({
+      key: {
+        data: 'test',
+        value: 123,
+        name: 'D@iVeR',
+        age: 28,
+        rizdos: { pui: '123', cheburek: { jaja: 29.0 }, urban_strike: {} }
+      },
+      b_key: 'some_string',
+      c_key: { itmo: { gigabyte: 21.1 } }
+    })
+
+    expect(result3.success?).to eq(true)
+    expect(result3.errors).to eq({})
+    expect(result3.extra_keys).to be_empty
+
+    expect(MySchema.new.valid?({})).to eq(false)
+    expect(MySchema.new.valid?({
+      key: {
+        data: 'test',
+        value: 123,
+        name: 'D@iVeR',
+        age: 28,
+        rizdos: { pui: '123', cheburek: { jaja: 29.0 }, urban_strike: {} }
+      },
+      b_key: 'some_string',
+      c_key: { itmo: { gigabyte: 21.1 } }
+    })).to eq(true)
+
+    expect do
+      Class.new(SmartCore::Schema) { non_required }
+    end.to raise_error(::NameError)
   end
 end

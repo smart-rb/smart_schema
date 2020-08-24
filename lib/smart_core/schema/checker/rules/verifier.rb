@@ -8,7 +8,7 @@ module SmartCore::Schema::Checker::Rules::Verifier
   class << self
     # @param rule [SmartCore::Schema::Checker::Rules::Base]
     # @param verifiable_hash [SmartCore::Schema::Checker::VerifiableHash]
-    # @return [void]
+    # @return [SmartCore::Schema::Checker::Rules::Verifier::Result]
     #
     # @api private
     # @since 0.1.0
@@ -59,7 +59,7 @@ module SmartCore::Schema::Checker::Rules::Verifier
 
     # @param rule [SmartCore::Schema::Checker::Rules::Base]
     # @param verifiable_hash [SmartCore::Schema::Checker::VerifiableHash]
-    # @return [SmartCore::Schema::Checker::Reconciler::Matcher::Result]
+    # @return [NilClass, SmartCore::Schema::Checker::Reconciler::Matcher::Result]
     #
     # @api private
     # @since 0.1.0

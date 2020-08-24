@@ -25,7 +25,7 @@ class SmartCore::Schema::Checker::Rules::Options
           key: schema_key,
           value: schema_value,
           error: ERROR_CODE,
-          message: 'TODO: меседж что поле должно быть filled (not null)'
+          message: 'Requires to be filled'
         )
       else
         SmartCore::Schema::Checker::Rules::Result::Success.new(

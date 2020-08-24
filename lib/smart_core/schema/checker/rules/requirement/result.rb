@@ -50,7 +50,7 @@ class SmartCore::Schema::Checker::Rules::Requirement::Result
     @success = required ? key_exists : true
     @failure = required ? !key_exists : false
     @error = required && !key_exists ? ERROR_CODE : nil
-    @message = required && !key_exists ? 'required-ключа нет в схеме' : nil
+    @message = required && !key_exists ? "Required key :#{key} not found" : nil
   end
 
   # @return [Boolean]

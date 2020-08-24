@@ -4,7 +4,7 @@
 # @since 0.1.0
 class SmartCore::Schema::Checker::Rules::Options
   class Type < Empty
-    # @note Constant is used only for clarity (for other developers).
+    # @note Constant is used only for clarity (for other developers)
     # @return [Symbol]
     #
     # @api private
@@ -41,21 +41,21 @@ class SmartCore::Schema::Checker::Rules::Options
           key: schema_key,
           value: schema_value,
           error: ERROR_CODE,
-          message: 'TODO: меседж что экспектед такой-то тайп, а получен другой'
+          message: "Requires #{type} type (got: #{schema_value.class})"
         )
       end
     end
 
     private
 
-    # @return [SmartCore::Types::Primitive]
+    # @return [String, Symbol, SmartCore::Types::Primitive]
     #
     # @api private
     # @since 0.1.0
     attr_reader :type
 
     # @param required_type [String, Symbol, SmartCore::Types::Primitive]
-    # @return [void]
+    # @return [SmartCore::Types::Primitive]
     #
     # @api private
     # @since 0.1.0
@@ -64,7 +64,8 @@ class SmartCore::Schema::Checker::Rules::Options
              required_type.is_a?(Symbol) ||
              required_type.is_a?(SmartCore::Types::Primitive)
         raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE)
-          TODO: написать нормальный эррор меседж, что тип в схеме для ключа указан некорректный
+          Schema key type should be a type of string,
+          symbol or SmartCore:Types::Primitive (got: #{required_type})
         ERROR_MESSAGE
       end
 
@@ -75,10 +76,12 @@ class SmartCore::Schema::Checker::Rules::Options
           SmartCore::Schema::Checker::Rules::TYPE_ALIASES.fetch(required_type.to_s)
         rescue KeyError
           raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE)
-            TODO: написать нормальный эррор меседж, что нет типа, который выбран в схеме для ключа
+            Chosen schema key type is not supported or not registered (got #{required_type})
           ERROR_MESSAGE
         end
       end
+
+      # TODO: rework with smart_type-system
     end
   end
 end

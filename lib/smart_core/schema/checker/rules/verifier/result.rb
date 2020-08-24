@@ -6,7 +6,7 @@ class SmartCore::Schema::Checker::Rules::Verifier::Result
   # @since 0.1.0
   include Enumerable
 
-  # @return [Array<SmartCore::Schema::Checker::Rules::result::Base>]
+  # @return [Array<SmartCore::Schema::Checker::Rules::Result::Base>]
   #
   # @api private
   # @since 0.1.0

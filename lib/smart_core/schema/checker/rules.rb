@@ -26,25 +26,6 @@ class SmartCore::Schema::Checker::Rules
   end
 
   # @param schema_key [String]
-  # @return [SmartCore::Schema::Checker::Rules::Base]
-  #
-  # @api private
-  # @since 0.1.0
-  def [](schema_key)
-    # rubocop:disable Style/RedundantBegin
-    thread_safe do
-      begin
-        rules.fetch(schema_key)
-      rescue KeyError
-        raise(SmartCore::Schema::UnaccceptableSchemaKeyError, <<~ERROR_MESSAGE)
-          TODO: нормальный эррор-меседж что ключ не описа в схеме
-        ERROR_MESSAGE
-      end
-    end
-    # rubocop:enable Style/RedundantBegin
-  end
-
-  # @param schema_key [String]
   # @param rule [SmartCore::Schema::Checker::Rules::Base]
   # @return [SmartCore::Schema::Checker::Rules::Base]
   #
@@ -85,15 +66,13 @@ class SmartCore::Schema::Checker::Rules
     thread_safe { rules.keys }
   end
 
-  protected # TODO: видимо, протектед уже не нужен
+  private
 
   # @return [Hash<String,SmartCore::Schema::Checker::Rules::Base>]
   #
   # @api private
   # @since 0.1.0
   attr_reader :rules
-
-  private
 
   # @param block [Block]
   # @return [Any]

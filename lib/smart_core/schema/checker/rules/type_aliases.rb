@@ -3,7 +3,11 @@
 # @api private
 # @since 0.1.0
 class SmartCore::Schema::Checker::Rules
-  # TODO: use smart_type-system
+  # @todo rework with smart_type-system
+  # @return [SmartCore::Types::Primitive]
+  #
+  # @api private
+  # @since 0.1.0
   TYPE_ALIASES = {
     'value.any'         => SmartCore::Types::Value::Any.nilable,
     'value.nil'         => SmartCore::Types::Value::Nil.nilable,
@@ -20,7 +24,7 @@ class SmartCore::Schema::Checker::Rules
     'value.proc'        => SmartCore::Types::Value::Proc.nilable,
     'value.class'       => SmartCore::Types::Value::Class.nilable,
     'value.module'      => SmartCore::Types::Value::Module.nilable,
-    'value.tme'         => SmartCore::Types::Value::Time.nilable,
+    'value.time'        => SmartCore::Types::Value::Time.nilable,
     'value.date_time'   => SmartCore::Types::Value::DateTime.nilable,
     'value.date'        => SmartCore::Types::Value::Date.nilable,
     'value.time_based'  => SmartCore::Types::Value::TimeBased.nilable,
@@ -39,7 +43,7 @@ class SmartCore::Schema::Checker::Rules
     'proc'              => SmartCore::Types::Value::Proc.nilable,
     'class'             => SmartCore::Types::Value::Class.nilable,
     'module'            => SmartCore::Types::Value::Module.nilable,
-    'tme'               => SmartCore::Types::Value::Time.nilable,
+    'time'              => SmartCore::Types::Value::Time.nilable,
     'date_time'         => SmartCore::Types::Value::DateTime.nilable,
     'date'              => SmartCore::Types::Value::Date.nilable,
     'time_based'        => SmartCore::Types::Value::TimeBased.nilable

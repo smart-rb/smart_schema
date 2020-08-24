@@ -22,7 +22,13 @@ class SmartCore::Schema::Checker
   # @api private
   # @since 0.1.0
   def check!(verifiable_hash)
-    thread_safe { reconciler.__match!(VerifiableHash.new(verifiable_hash)).complete! }
+    thread_safe do
+      raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE) unless verifiable_hash.is_a?(Hash)
+        Verifiable hash should be a type of ::Hash
+      ERROR_MESSAGE
+
+      reconciler.__match!(VerifiableHash.new(verifiable_hash)).complete!
+    end
   end
 
   # @param definitions [Block]
@@ -40,7 +46,7 @@ class SmartCore::Schema::Checker
   # @api private
   # @since 0.1.0
   def combine_with(another_checker)
-    thread_safe { self } # TODO: merge definitions and return self
+    thread_safe { self } # TODO (0.x.0): merge the definitions and return self
   end
 
   private

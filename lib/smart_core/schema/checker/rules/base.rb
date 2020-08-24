@@ -66,7 +66,7 @@ class SmartCore::Schema::Checker::Rules::Base
   # @param nested_definitions [Block]
   # @return [self]
   #
-  # @api ublic
+  # @api public
   # @since 0.1.0
   def filled(&nested_definitions)
     thread_safe do
