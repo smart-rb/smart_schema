@@ -4,7 +4,7 @@
 
 Provides convenient and concise DSL to define complex schemas in easiest way and public validation interface to achieve a comfortable work with detailed validation result.
 
-Supports nested structures, type validation (via `smart_types`), required- and optional- schema keys, schema value presence validation, schema inheritance, schema extending and schema composition.
+Supports nested structures, type validation (via `smart_types`), required- and optional- schema keys, schema value presence validation, schema inheritance (soon), schema extending (soon) and schema composition (soon).
 
 Works in predicate style and in OOP/Monadic result object style. Enjoy :)
 
