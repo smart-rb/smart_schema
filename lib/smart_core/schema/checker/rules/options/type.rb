@@ -64,8 +64,7 @@ class SmartCore::Schema::Checker::Rules::Options
              required_type.is_a?(Symbol) ||
              required_type.is_a?(SmartCore::Types::Primitive)
         raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE)
-          Schema key type should be a type of string,
-          symbol or SmartCore:Types::Primitive (got: #{required_type})
+          Schema key type should be a type of string, symbol or SmartCore:Types::Primitive (got: #{required_type})
         ERROR_MESSAGE
       end
 

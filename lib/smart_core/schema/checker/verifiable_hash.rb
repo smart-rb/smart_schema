@@ -51,6 +51,7 @@ class SmartCore::Schema::Checker::VerifiableHash
   # @api private
   # @since 0.1.0
   def fetch(key)
+    # rubocop:disable Style/RedundantBegin
     @lock.synchronize do
       begin
         source.fetch(key)
@@ -58,6 +59,7 @@ class SmartCore::Schema::Checker::VerifiableHash
         source.fetch(key.to_sym)
       end
     end
+    # rubocop:enable Style/RedundantBegin
   end
   alias_method :[], :fetch
 end

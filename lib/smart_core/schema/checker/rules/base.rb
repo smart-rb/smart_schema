@@ -88,7 +88,7 @@ class SmartCore::Schema::Checker::Rules::Base
     return unless block_given?
 
     SmartCore::Schema::Checker::Reconciler::Constructor.tap do |constructor|
-      @nested_reconciler = constructor.create if @nested_reconciler.nil?
+      @nested_reconciler = constructor.create if @nested_reconciler == nil
       constructor.append_definitions(@nested_reconciler, &nested_definitions)
     end
 

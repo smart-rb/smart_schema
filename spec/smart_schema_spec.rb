@@ -113,8 +113,12 @@ RSpec.describe SmartCore::Schema do
       c_key: { itmo: { gigabyte: 21.1 } }
     })).to eq(true)
 
-    expect do
-      Class.new(SmartCore::Schema) { non_required }
+    expect do # incompatible dsl (schema)
+      Class.new(SmartCore::Schema) { schema { non_required } }
     end.to raise_error(::NameError)
+
+    expect do # incompatible type
+      Class.new(SmartCore::Schema) { schema { required(:kek).type(Object.new) } }
+    end.to raise_error(::SmartCore::Schema::ArgumentError)
   end
 end
