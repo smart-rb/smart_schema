@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Rustam Ibragimov"]
   spec.email   = ["iamdaiver@gmail.com"]
 
-  spec.summary     = 'Schema Object'
-  spec.description = 'Schema Object'
+  spec.summary     = 'SmartCore::Schema is a schema validator for Hash-like data structures'
+  spec.description = 'SmartCore::Schema is a schema validator for Hash-like data structures'
   spec.homepage    = 'https://github.com/smart-rb/smart_schema'
   spec.license     = 'MIT'
 
