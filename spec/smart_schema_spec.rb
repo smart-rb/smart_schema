@@ -75,7 +75,10 @@ RSpec.describe SmartCore::Schema do
       'key.rizdos.pui' => [:invalid_type],
       'key.rizdos.cheburek.jaja' => [:non_filled],
       'b_key' => [:required_key_not_found],
-      'c_key.itmo.gigabyte' => [:required_key_not_found]
+      'c_key.itmo.gigabyte' => [:required_key_not_found],
+      'key.cheburek' => [:extra_key],
+      'key.urban_strike' => [:extra_key],
+      'key.rizdos.che' => [:extra_key]
     )
     expect(result2.extra_keys).to contain_exactly(
       'key.cheburek',

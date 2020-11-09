@@ -88,7 +88,7 @@ result = MySchema.new.validate(
 
 # => outputs:
 #  #<SmartCore::Schema::Result:0x00007ffcd8926990
-#  @errors={"key.data"=>[:non_filled], "key.value"=>[:invalid_type], "key.nested"=>[:required_key_not_found], "another_key"=>[:non_filled]},
+#  @errors={"key.data"=>[:non_filled], "key.value"=>[:invalid_type], "key.nested"=>[:required_key_not_found], "another_key"=>[:non_filled], "third_key"=>[:extra_key]},
 #  @extra_keys=#<Set: {"third_key"}>,
 #  @source={:key=>{:data=>nil, :value=>"1", :name=>"D@iVeR"}, :another_key=>nil, :third_key=>"test"}>
 
@@ -99,9 +99,16 @@ result.errors # =>
   "key.data"=>[:non_filled],
   "key.value"=>[:invalid_type],
   "key.nested"=>[:required_key_not_found],
-  "another_key"=>[:non_filled]
+  "another_key"=>[:non_filled],
+  "third_key"=>[:extra_key]
 }
 ```
+
+Possible errors:
+  - `:non_filled` (existing key has nil value);
+  - `:invalid_type` (existing key has invalid type);
+  - `:required_key_not_found` (required key does not exist);
+  - `:extra_key` (a key that does not exist in schema);
 
 ---
 

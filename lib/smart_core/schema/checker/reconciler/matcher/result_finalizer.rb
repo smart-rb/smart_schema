@@ -7,13 +7,19 @@ module SmartCore::Schema::Checker::Reconciler::Matcher::ResultFinalizer
   #
   # @api private
   # @since 0.1.0
-  ERRORS_CONTAINER_BUILDER = -> { Hash.new { |hash, key| hash[key] = [] } }
+  ERRORS_CONTAINER_BUILDER = -> { Hash.new { |hash, key| hash[key] = Set.new } }
 
   # @return [Proc]
   #
   # @api private
   # @since 0.1.0
   EXTRA_KEYS_CONTAINER_BUILDER = -> { Set.new }
+
+  # @return [Symbol]
+  #
+  # @api private
+  # @since 0.2.0
+  EXTRA_KEY_ERROR_CODE = :extra_key
 
   class << self
     # @param result [SmartCore::Schema::Checker::Reconciler::Matcher::Result]
@@ -128,6 +134,10 @@ module SmartCore::Schema::Checker::Reconciler::Matcher::ResultFinalizer
             compiled_extra_keys.merge(compiled_sub_extra_keys)
           end
         end
+      end
+
+      compiled_extra_keys.each do |compiled_extra_key|
+        compiled_errors[compiled_extra_key] << EXTRA_KEY_ERROR_CODE
       end
 
       [compiled_errors, compiled_extra_keys]
