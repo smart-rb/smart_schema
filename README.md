@@ -115,7 +115,6 @@ Possible errors:
 ## Roadmap
 
 - **(0.2.0)** - dependable schema checking (sample: if one key exist (or not) we should check another (or not), and vice verca);
-- **(0.2.0)** - `#extra_keys` as errors in `#errors`;
 - **(0.3.0)** - schema inheritance;
 - **(0.3.0)** - schema composition (`required(:key).schema(SchemaClass)`) (`compose_with(AnotherSchema)`);
 - **(0.4.0)** - error messages (that are consistent with error codes);
