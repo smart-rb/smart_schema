@@ -4,10 +4,13 @@
 # @since 0.1.0
 class SmartCore::Schema::Checker::Rules
   # @todo rework with smart_type-system
+  # @note non-frized constant is used for temporary extendability
   # @return [SmartCore::Types::Primitive]
   #
   # @api private
   # @since 0.1.0
+  # @version 0.2.0
+  # rubocop:disable Style/MutableConstant
   TYPE_ALIASES = {
     'value.any'         => SmartCore::Types::Value::Any.nilable,
     'value.nil'         => SmartCore::Types::Value::Nil.nilable,
@@ -47,5 +50,6 @@ class SmartCore::Schema::Checker::Rules
     'date_time'         => SmartCore::Types::Value::DateTime.nilable,
     'date'              => SmartCore::Types::Value::Date.nilable,
     'time_based'        => SmartCore::Types::Value::TimeBased.nilable
-  }.freeze
+  }
+  # rubocop:enable Style/MutableConstant
 end

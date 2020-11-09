@@ -104,10 +104,11 @@ module SmartCore::Schema::Checker::Reconciler::Matcher::ResultFinalizer
 
     # @param errors [Hash]
     # @param extra_keys [Set]
-    # @return [Array<Hash<String,Array<Symbol>>,Set<String>]
+    # @return [Array<Hash<String,Set<Symbol>>,Set<String>]
     #
     # @api private
     # @since 0.1.0
+    # @version 0.2.0
     # rubocop:disable Metrics/AbcSize
     def compile_errors(errors, extra_keys, initial_error_key = nil)
       compiled_errors = ERRORS_CONTAINER_BUILDER.call
