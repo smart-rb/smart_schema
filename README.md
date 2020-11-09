@@ -108,7 +108,7 @@ Possible errors:
   - `:non_filled` (existing key has nil value);
   - `:invalid_type` (existing key has invalid type);
   - `:required_key_not_found` (required key does not exist);
-  - `:extra_key` (a key that does not exist in schema);
+  - `:extra_key` (concrete key does not exist in schema);
 
 ---
 
