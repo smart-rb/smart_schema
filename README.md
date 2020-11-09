@@ -114,13 +114,13 @@ Possible errors:
 
 ## Roadmap
 
-- **(0.2.0)** - dependable schema checking (sample: if one key exist (or not) we should check another (or not), and vice verca);
 - **(0.3.0)** - schema inheritance;
 - **(0.3.0)** - schema composition (`required(:key).schema(SchemaClass)`) (`compose_with(AnotherSchema)`);
-- **(0.4.0)** - error messages (that are consistent with error codes);
-- **(0.5.0)** - `smart_type-system` integration;
-- **(0.6.0)** - support for another data structures (such as YAML strings, JSON strings, `Struct`, `OpenStruct`s, custom `Object`s  and etc);
-- **(0.7.0)** - think about pattern matching;
+- **(0.4.0)** - dependable schema checking (sample: if one key exist (or not) we should check another (or not), and vice verca);
+- **(0.5.0)** - error messages (that are consistent with error codes);
+- **(0.6.0)** - `smart_type-system` integration;
+- **(0.7.0)** - support for another data structures (such as YAML strings, JSON strings, `Struct`, `OpenStruct`s, custom `Object`s  and etc);
+- **(0.8.0)** - think about pattern matching;
 
 ---
 
