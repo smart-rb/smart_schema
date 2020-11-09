@@ -45,18 +45,18 @@ RSpec.describe SmartCore::Schema do
     end
 
     # invalid schema
-    result1 = MySchema.new.validate({})
+    result_1 = MySchema.new.validate({})
 
-    expect(result1.success?).to eq(false)
-    expect(result1.errors).to match(
+    expect(result_1.success?).to eq(false)
+    expect(result_1.errors).to match(
       'key'   => [:required_key_not_found],
       'b_key' => [:required_key_not_found],
       'c_key' => [:required_key_not_found]
     )
-    expect(result1.extra_keys).to be_empty
+    expect(result_1.extra_keys).to be_empty
 
     # invalid schema
-    result2 = MySchema.new.validate({
+    result_2 = MySchema.new.validate({
       key: {
         data: 123,
         value: 123,
@@ -68,8 +68,8 @@ RSpec.describe SmartCore::Schema do
       c_key: { itmo: {} }
     })
 
-    expect(result2.success?).to eq(false)
-    expect(result2.errors).to match(
+    expect(result_2.success?).to eq(false)
+    expect(result_2.errors).to match(
       'key.data' => [:invalid_type],
       'key.age' => [:required_key_not_found],
       'key.rizdos.pui' => [:invalid_type],
@@ -80,14 +80,14 @@ RSpec.describe SmartCore::Schema do
       'key.urban_strike' => [:extra_key],
       'key.rizdos.che' => [:extra_key]
     )
-    expect(result2.extra_keys).to contain_exactly(
+    expect(result_2.extra_keys).to contain_exactly(
       'key.cheburek',
       'key.urban_strike',
       'key.rizdos.che'
     )
 
     # valid state
-    result3 = MySchema.new.validate({
+    result_3 = MySchema.new.validate({
       key: {
         data: 'test',
         value: 123,
@@ -99,9 +99,9 @@ RSpec.describe SmartCore::Schema do
       c_key: { itmo: { gigabyte: 21.1 } }
     })
 
-    expect(result3.success?).to eq(true)
-    expect(result3.errors).to eq({})
-    expect(result3.extra_keys).to be_empty
+    expect(result_3.success?).to eq(true)
+    expect(result_3.errors).to eq({})
+    expect(result_3.extra_keys).to be_empty
 
     expect(MySchema.new.valid?({})).to eq(false)
     expect(MySchema.new.valid?({

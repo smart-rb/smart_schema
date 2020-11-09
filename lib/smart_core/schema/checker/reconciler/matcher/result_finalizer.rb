@@ -108,6 +108,7 @@ module SmartCore::Schema::Checker::Reconciler::Matcher::ResultFinalizer
     #
     # @api private
     # @since 0.1.0
+    # rubocop:disable Metrics/AbcSize
     def compile_errors(errors, extra_keys, initial_error_key = nil)
       compiled_errors = ERRORS_CONTAINER_BUILDER.call
       compiled_extra_keys = EXTRA_KEYS_CONTAINER_BUILDER.call
@@ -142,5 +143,6 @@ module SmartCore::Schema::Checker::Reconciler::Matcher::ResultFinalizer
 
       [compiled_errors, compiled_extra_keys]
     end
+    # rubocop:enable Metrics/AbcSize
   end
 end
