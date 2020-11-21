@@ -114,6 +114,7 @@ Possible errors:
 
 ## Roadmap
 
+- **(0.3.0)** - optional support for non-strict schemas (that allows extra keys);
 - **(0.3.0)** - schema inheritance;
 - **(0.3.0)** - schema composition (`required(:key).schema(SchemaClass)`) (`compose_with(AnotherSchema)`);
 - **(0.3.0)** - error messages (that are consistent with error codes);
