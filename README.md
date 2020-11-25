@@ -114,10 +114,10 @@ Possible errors:
 
 ## Roadmap
 
+- **(0.3.0)** - error messages (that are consistent with error codes), with a support for code-auto-mappings for error messages via explicit hashes or via file (yaml, json and other formats);
 - **(0.3.0)** - optional support for non-strict schemas (that allows extra keys);
-- **(0.3.0)** - schema inheritance;
-- **(0.3.0)** - schema composition (`required(:key).schema(SchemaClass)`) (`compose_with(AnotherSchema)`);
-- **(0.3.0)** - error messages (that are consistent with error codes);
+- **(0.4.0)** - schema inheritance;
+- **(0.4.0)** - schema composition (`required(:key).schema(SchemaClass)`) (`compose_with(AnotherSchema)`);
 - **(0.4.0)** - dependable schema checking (sample: if one key exist (or not) we should check another (or not), and vice verca) (mb `if(:_key_)` rule);
 - **(0.6.0)** - `smart_type-system` integration;
 - **(0.7.0)** - support for another data structures (such as YAML strings, JSON strings, `Struct`, `OpenStruct`s, custom `Object`s  and etc);
