@@ -7,13 +7,17 @@ RSpec.describe SmartCore::Schema do
 
   specify 'smoke' do
     class MySchema < SmartCore::Schema
-      schema do
+      schema(:non_strict) do
+        strict!
+
         required(:key) do
           optional(:data).type(:string)
           optional(:value).type(:numeric)
           required(:name).type(:string)
           required(:age).type(:integer)
           required(:rizdos) do
+            non_strict!
+
             required(:pui).type(SmartCore::Types::Value::String)
             required(:cheburek) do
               required(:jaja).filled

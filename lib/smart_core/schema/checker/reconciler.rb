@@ -2,6 +2,7 @@
 
 # @api private
 # @since 0.1.0
+# @version 0.2.0
 class SmartCore::Schema::Checker::Reconciler
   require_relative 'reconciler/constructor'
   require_relative 'reconciler/matcher'
@@ -12,6 +13,7 @@ class SmartCore::Schema::Checker::Reconciler
   # @since 0.1.0
   def initialize
     @rules = SmartCore::Schema::Checker::Rules.new
+    @strict = Constructor::DEFAULT_STRICT_BEHAVIOR
     @lock = SmartCore::Engine::Lock.new
   end
 
@@ -64,6 +66,23 @@ class SmartCore::Schema::Checker::Reconciler
       rule = SmartCore::Schema::Checker::Rules::Optional.new(schema_key, &nested_definitions)
       rule.tap { rules[rule.schema_key] = rule }
     end
+  end
+
+  # @param is_strict [Boolean]
+  # @return [void]
+  #
+  # @api public
+  # @since 0.2.0
+  def strict!(is_strict = Constructor::DEFAULT_STRICT_BEHAVIOR)
+    thread_safe { @strict = is_strict }
+  end
+
+  # @return [void]
+  #
+  # @api public
+  # @since 0.2.0
+  def non_strict!
+    thread_safe { strict!(false) }
   end
 
   private
