@@ -7,6 +7,8 @@ RSpec.describe SmartCore::Schema do
 
   specify 'smoke' do
     class MySchema < SmartCore::Schema
+      strict!
+
       schema(:non_strict) do
         strict!
 
