@@ -82,7 +82,7 @@ class SmartCore::Schema::Checker::Reconciler
   # @api public
   # @since 0.2.0
   def non_strict!
-    thread_safe { strict!(false) }
+    thread_safe { strict!(Constructor::STRICT_MODES[:non_strict]) }
   end
 
   private
