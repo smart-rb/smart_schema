@@ -11,6 +11,7 @@ class SmartCore::Schema::Checker::Reconciler
   #
   # @api private
   # @since 0.1.0
+  # @version 0.2.0
   def initialize
     @rules = SmartCore::Schema::Checker::Rules.new
     @strict = Constructor::DEFAULT_STRICT_BEHAVIOR
