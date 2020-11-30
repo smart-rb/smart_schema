@@ -35,17 +35,19 @@ class SmartCore::Schema::Checker::Rules::Base
     define_nested_reconciler(&nested_definitions)
   end
 
-  # @!method requirement
-  #   @return [SmartCore::Schema::Checker::Rules::Requirement::Optional]
+  # @!method requirement @return [SmartCore::Schema::Checker::Rules::Requirement::Optional]
   #   @return [SmartCore::Schema::Checker::Rules::Requirement::Required]
 
+  # @param matcher_options [SmartCore::Schema::Checker::Reconciler::Matcher::Options]
   # @param verifiable_hash [Hash<String|Symbol,Any>]
   # @return [SmartCore::Schema::Checker::Rules::Verifier::Result]
   #
   # @api private
   # @since 0.1.0
-  def __verify!(verifiable_hash)
-    SmartCore::Schema::Checker::Rules::Verifier.verify!(self, verifiable_hash)
+  def __verify!(verifiable_hash, matcher_options)
+    SmartCore::Schema::Checker::Rules::Verifier.verify!(
+      self, matcher_options, verifiable_hash
+    )
   end
 
   # @param required_type [String, Symbol, SmartCore::Types::Primitive]

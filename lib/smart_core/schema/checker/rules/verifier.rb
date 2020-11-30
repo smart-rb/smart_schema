@@ -7,12 +7,13 @@ module SmartCore::Schema::Checker::Rules::Verifier
 
   class << self
     # @param rule [SmartCore::Schema::Checker::Rules::Base]
+    # @param matcher_options [SmartCore::Schema::Checker::Reconciler::Matcher::Options]
     # @param verifiable_hash [SmartCore::Schema::Checker::VerifiableHash]
     # @return [SmartCore::Schema::Checker::Rules::Verifier::Result]
     #
     # @api private
     # @since 0.1.0
-    def verify!(rule, verifiable_hash)
+    def verify!(rule, matcher_options, verifiable_hash)
       SmartCore::Schema::Checker::Rules::Verifier::Result.new(rule).tap do |result|
         requirement = result << check_requirement(rule, verifiable_hash)
         next result if requirement.required? && requirement.failure?

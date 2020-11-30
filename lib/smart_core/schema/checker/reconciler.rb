@@ -43,6 +43,14 @@ class SmartCore::Schema::Checker::Reconciler
     thread_safe { rules }
   end
 
+  # @return [Boolean]
+  #
+  # @api private
+  # @since 0.3.0
+  def __strict?
+    thread_safe { @strict }
+  end
+
   # @param schema_key [String, Symbol]
   # @param nested_definitions [Block]
   # @return [SmartCore::Schema::Checker::Rules::Required]
