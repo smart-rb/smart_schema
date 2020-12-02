@@ -42,6 +42,8 @@ require 'smart_core/schema'
   - use `schema(:non_strict)` to globally define non-strict schema;
   - nested schemas inherits strict behavior from outer schemas;
   - root schema is `:strict` by default;
+  - schema reopening without mode attribute does not change original schema mode
+    (you should manually pass a mode attribute to redefine already defined schema mode);
 
 ```ruby
 class MySchema < SmartCore::Schema
@@ -49,7 +51,7 @@ class MySchema < SmartCore::Schema
   # non_strict!
   # strict!
 
-  schema do # (or here) (the smae as `schema(:strict)`)
+  schema do
     required(:key) do
       # inherits `:strict`
       optional(:data).type(:string).filled
