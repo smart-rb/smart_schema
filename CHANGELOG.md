@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+# [Unreleased]
+### Added
+- Support for *strict* and *non-strict* schemas;
+
 # [0.2.0] - 2020-11-09
 ### Added
 - `#errors` now includes `#extra_keys` too (`:extra_key` error code for each extra key);

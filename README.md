@@ -33,17 +33,36 @@ require 'smart_core/schema'
 - `nil` control: `filled`;
 - nested definitions: `do ... end`;
 - supported types: see `smart_types` gem;
+- strict modes and strict behavior:
+  - `strict!` DSL directive marks your schema as a strict schema (your hash can not have extra keys);
+  - `non_strict!` DSL directive marks your schema as non-strict schema (your hash can have extra keys);
+  - use `strict!` in any schema's context place to mark your current schema context as a strict;
+  - use `non_strict` in any schema's context place to mark your current schema context as a strict;
+  - use `schema(:strict)` to globally define strict schema (default behavior);
+  - use `schema(:non_strict)` to globally define non-strict schema;
+  - nested schemas inherits strict behavior from outer schemas;
+  - root schema is `:strict` by default;
 
 ```ruby
 class MySchema < SmartCore::Schema
-  schema do
+  # you can mark root schema here:
+  # non_strict!
+  # strict!
+
+  schema do # (or here) (the smae as `schema(:strict)`)
     required(:key) do
+      # inherits `:strict`
       optional(:data).type(:string).filled
       optional(:value).type(:numeric)
       required(:name).type(:string)
 
       required(:nested) do
+        # inherits `:strict`
         optional(:version).filled
+      end
+
+      optional(:another_nested) do
+        non_strict! # and here
       end
     end
 
@@ -116,7 +135,6 @@ Possible errors:
 
 - **(0.x.0)** - value-validation layer;
 - **(0.3.0)** - error messages (that are consistent with error codes), with a support for error-code-auto-mappings for error messages via explicit hashes or via file (yaml, json and other formats);
-- **(0.3.0)** - optional support for non-strict schemas (that allows extra keys);
 - **(0.4.0)** - schema inheritance;
 - **(0.4.0)** - schema composition (`required(:key).schema(SchemaClass)`) (`compose_with(AnotherSchema)`);
 - **(0.4.0)** - dependable schema checking (sample: if one key exist (or not) we should check another (or not), and vice verca) (mb `if(:_key_)` rule);
