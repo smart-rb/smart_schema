@@ -156,7 +156,8 @@ Possible errors:
 ## Roadmap
 
 - **(0.x.0)** - value-validation layer;
-- **(0.3.0)** - error messages (that are consistent with error codes), with a support for error-code-auto-mappings for error messages via explicit hashes or via file (yaml, json and other formats);
+- **(0.x.0)** - error messages (that are consistent with error codes), with a support for error-code-auto-mappings for error messages via explicit hashes or via file (yaml, json and other formats);
+- **(0.3.0)** - spread keys in validation result;
 - **(0.4.0)** - schema inheritance;
 - **(0.4.0)** - schema composition (`required(:key).schema(SchemaClass)`) (`compose_with(AnotherSchema)`);
 - **(0.4.0)** - dependable schema checking (sample: if one key exist (or not) we should check another (or not), and vice verca) (mb `if(:_key_)` rule);
