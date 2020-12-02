@@ -34,17 +34,9 @@ require 'smart_core/schema'
 - nested definitions: `do ... end`;
 - supported types: see `smart_types` gem;
 - strict modes and strict behavior: `strict!`, `non_strict!`, `schema(:strict)`, `schema(:non_strict)`;
-  - `:strict` is used by default (in first `schema` invokation);
-  - you can make non-strict inner schemas in strict schemas;
-  - inner schemas inherits it's mode from their's outer schema;
-  - in code:
-    ```ruby
-    schema(:strict) # for strict schemas
-    schema(:non_strict) # for non-strict schemas
-
-    strict! # inside schema definition
-    non_strict! # inside schema definition
-    ```
+- `:strict` is used by default (in first `schema` invokation);
+- you can make non-strict inner schemas inside strict schemas (and vise-versa);
+- inner schemas inherits it's mode from their's outer schema (and can have own mode too);
 
 ```ruby
 class MySchema < SmartCore::Schema
