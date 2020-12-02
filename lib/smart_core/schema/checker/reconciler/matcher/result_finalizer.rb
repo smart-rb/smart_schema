@@ -61,7 +61,7 @@ module SmartCore::Schema::Checker::Reconciler::Matcher::ResultFinalizer
         result.verifiable_hash.source,
         schema_errors.freeze,
         extra_keys.freeze,
-        spread_keys.freeze
+        SPREAD_KEYS_CONTAINER_BUILDER.call.freeze # TODO: spread_keys.freeze
       )
     end
 

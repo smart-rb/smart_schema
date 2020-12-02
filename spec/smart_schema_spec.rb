@@ -101,6 +101,7 @@ RSpec.describe SmartCore::Schema do
     # expect(result_2.spread_keys).to contain_exactly(
     #   'key.rizdos.che'
     # )
+    expect(result_2.spread_keys).to be_empty
 
     # valid state
     result_3 = MySchema.new.validate({
@@ -118,6 +119,7 @@ RSpec.describe SmartCore::Schema do
     expect(result_3.success?).to eq(true)
     expect(result_3.errors).to eq({})
     expect(result_3.extra_keys).to be_empty
+    expect(result_3.spread_keys).to be_empty
 
     expect(MySchema.new.valid?({})).to eq(false)
     expect(MySchema.new.valid?({
@@ -139,10 +141,10 @@ RSpec.describe SmartCore::Schema do
     end
 
     result_4 = StrictByDefaultSchema.new.validate({ jaga: 'test', gaga: 123 })
-
     expect(result_4.success?).to eq(false)
     expect(result_4.failure?).to eq(true)
     expect(result_4.extra_keys).to contain_exactly('gaga')
+    expect(result_4.spread_keys).to be_empty
 
     class InheritableModeSchema < SmartCore::Schema
       schema(:non_strict) do # non-strict
@@ -171,10 +173,23 @@ RSpec.describe SmartCore::Schema do
       },
       fek: 5
     })
-
     expect(result_5.success?).to eq(false)
     expect(result_5.failure?).to eq(true)
     expect(result_5.extra_keys).to contain_exactly('kek.jek.aza')
+
+    class InitialNonStrictSchema < SmartCore::Schema
+      non_strict!
+
+      schema do
+        required(:pek)
+      end
+    end
+
+    result_6 = InitialNonStrictSchema.new.validate({ pek: 1, kek: 2 })
+    expect(result_6.success?).to eq(true)
+    expect(result_6.failure?).to eq(false)
+    expect(result_6.extra_keys).to be_empty
+    expect(result_6.spread_keys).to be_empty
 
     expect do # incompatible dsl (schema)
       Class.new(SmartCore::Schema) { schema { non_required } }
