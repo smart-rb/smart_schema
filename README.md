@@ -36,7 +36,7 @@ require 'smart_core/schema'
 - strict modes and strict behavior: `strict!`, `non_strict!`, `schema(:strict)`, `schema(:non_strict)`;
 - `:strict` is used by default (in first `schema` invokation);
 - you can make non-strict inner schemas inside strict schemas (and vise-versa);
-- inner schemas inherits it's mode from their's outer schema (and can have own mode too);
+- inner schemas inherits their's mode from their's nearest outer schema (and can have own mode too);
 
 ```ruby
 class MySchema < SmartCore::Schema
