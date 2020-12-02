@@ -4,7 +4,7 @@
 
 Provides convenient and concise DSL to define complex schemas in easiest way and public validation interface to achieve a comfortable work with detailed validation result.
 
-Supports nested structures, type validation (via `smart_types`), required- and optional- schema keys, schema value presence validation, schema inheritance (soon), schema extending (soon) and schema composition (soon).
+Supports nested structures, type validation (via `smart_types`), required- and optional- schema keys, *strict* and *non-strict* schemas, schema value presence validation, schema inheritance (soon), schema extending (soon) and schema composition (soon).
 
 Works in predicate style and in OOP/Monadic result object style. Enjoy :)
 
@@ -149,7 +149,7 @@ Possible errors:
 
 - **(0.x.0)** - value-validation layer;
 - **(0.x.0)** - error messages (that are consistent with error codes), with a support for error-code-auto-mappings for error messages via explicit hashes or via file (yaml, json and other formats);
-- **(0.3.0)** - spread keys in validation result;
+- **(0.3.0)** - spread keys of strict schemas in validation result;
 - **(0.4.0)** - schema inheritance;
 - **(0.4.0)** - schema composition (`required(:key).schema(SchemaClass)`) (`compose_with(AnotherSchema)`);
 - **(0.4.0)** - dependable schema checking (sample: if one key exist (or not) we should check another (or not), and vice verca) (mb `if(:_key_)` rule);
