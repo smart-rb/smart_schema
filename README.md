@@ -51,7 +51,7 @@ class MySchema < SmartCore::Schema
   # non_strict!
   # strict!
 
-  schema do
+  schema do # or here
     required(:key) do
       # inherits `:strict`
       optional(:data).type(:string).filled
@@ -64,7 +64,7 @@ class MySchema < SmartCore::Schema
       end
 
       optional(:another_nested) do
-        non_strict! # and here
+        non_strict! # marks current schema as :non_strict
       end
     end
 
@@ -75,6 +75,26 @@ class MySchema < SmartCore::Schema
   #
   # schema do
   #   required(:third_key).filled.type(:string)
+  # end
+
+  # you can redefine strict behavior of already defined schema:
+  #
+  # schema(:non_strict) do
+  #   ...
+  # end
+  #
+  # -- or --
+  #
+  # schema do
+  #   non_strict!
+  # end
+  #
+  # -- and --
+  #
+  # schema do
+  #   optional(:another_nested) do
+  #     strict!
+  #   end
   # end
 end
 ```
