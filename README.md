@@ -89,11 +89,11 @@ class MySchema < SmartCore::Schema
   #   non_strict!
   # end
   #
-  # -- and --
+  # -- and (redefine nested schema behavior) --
   #
   # schema do
   #   optional(:another_nested) do
-  #     strict!
+  #     strict! # change from :non_strict to :strict
   #   end
   # end
 end
