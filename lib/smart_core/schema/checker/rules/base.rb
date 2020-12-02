@@ -2,6 +2,7 @@
 
 # @api private
 # @since 0.1.0
+# @version 0.3.0
 class SmartCore::Schema::Checker::Rules::Base
   # @return [String]
   #
@@ -21,21 +22,31 @@ class SmartCore::Schema::Checker::Rules::Base
   # @since 0.1.0
   attr_reader :nested_reconciler
 
+  # @return [SmartCore::Schema::Checker::Reconciler]
+  #
+  # @api private
+  # @since 0.3.0
+  attr_reader :root_reconciler
+
+  # @param root_reconciler [SmartCore::Schema::Checker::Reconciler]
   # @param schema_key [String, Symbol]
   # @param nested_definitions [Block]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def initialize(schema_key, &nested_definitions)
+  # @version 0.3.0
+  def initialize(root_reconciler, schema_key, &nested_definitions)
     @lock = SmartCore::Engine::Lock.new
+    @root_reconciler = root_reconciler
     @schema_key = SmartCore::Schema::KeyControl.normalize(schema_key)
     @options = SmartCore::Schema::Checker::Rules::Options.new(self)
     @nested_reconciler = nil
     define_nested_reconciler(&nested_definitions)
   end
 
-  # @!method requirement @return [SmartCore::Schema::Checker::Rules::Requirement::Optional]
+  # @!method requirement
+  #   @return [SmartCore::Schema::Checker::Rules::Requirement::Optional]
   #   @return [SmartCore::Schema::Checker::Rules::Requirement::Required]
 
   # @param matcher_options [SmartCore::Schema::Checker::Reconciler::Matcher::Options]
@@ -44,6 +55,7 @@ class SmartCore::Schema::Checker::Rules::Base
   #
   # @api private
   # @since 0.1.0
+  # @version 0.3.0
   def __verify!(verifiable_hash, matcher_options)
     SmartCore::Schema::Checker::Rules::Verifier.verify!(
       self, matcher_options, verifiable_hash
@@ -86,11 +98,13 @@ class SmartCore::Schema::Checker::Rules::Base
   #
   # @api private
   # @since 0.1.0
+  # @version 0.3.0
   def define_nested_reconciler(&nested_definitions)
     return unless block_given?
 
     SmartCore::Schema::Checker::Reconciler::Constructor.tap do |constructor|
       @nested_reconciler = constructor.create if @nested_reconciler == nil
+      @nested_reconciler.strict!(root_reconciler.__strict?)
       constructor.append_definitions(@nested_reconciler, &nested_definitions)
     end
 

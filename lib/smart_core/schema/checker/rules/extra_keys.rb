@@ -21,10 +21,7 @@ module SmartCore::Schema::Checker::Rules::ExtraKeys
     def __verify!(verifiable_hash, rules, matcher_options)
       extra_keys = verifiable_hash.keys - rules.keys
 
-      case
-      when extra_keys.empty?
-        Success.new(extra_keys, matcher_options)
-      when extra_keys.any? && !matcher_options.strict_schema?
+      if extra_keys.empty? || (extra_keys.any? && !matcher_options.strict_schema?)
         Success.new(extra_keys, matcher_options)
       else
         Failure.new(extra_keys, matcher_options)

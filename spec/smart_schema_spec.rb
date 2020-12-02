@@ -60,6 +60,7 @@ RSpec.describe SmartCore::Schema do
       'c_key' => [:required_key_not_found]
     )
     expect(result_1.extra_keys).to be_empty
+    expect(result_1.spread_keys).to be_empty
 
     # invalid schema
     result_2 = MySchema.new.validate({
@@ -67,9 +68,16 @@ RSpec.describe SmartCore::Schema do
         data: 123,
         value: 123,
         name: 'D@iVeR',
-        rizdos: { pui: 123, che: true, cheburek: { jaja: nil }, urban_strike: {} },
-        cheburek: {},
-        urban_strike: {}
+        rizdos: {
+          pui: 123, 
+          che: true, # spread-key (key from non-strict schema)
+          cheburek: { 
+            jaja: nil 
+          },
+          urban_strike: {} 
+        },
+        cheburek: {}, # extra-key (key from strict schema)
+        urban_strike: {} # extra-key (key from strict schema)
       },
       c_key: { itmo: {} }
     })
@@ -84,13 +92,15 @@ RSpec.describe SmartCore::Schema do
       'c_key.itmo.gigabyte' => [:required_key_not_found],
       'key.cheburek' => [:extra_key],
       'key.urban_strike' => [:extra_key],
-      'key.rizdos.che' => [:extra_key]
     )
     expect(result_2.extra_keys).to contain_exactly(
       'key.cheburek',
-      'key.urban_strike',
-      'key.rizdos.che'
+      'key.urban_strike'
     )
+    # TODO: spread keys aggregation and check
+    # expect(result_2.spread_keys).to contain_exactly(
+    #   'key.rizdos.che'
+    # )
 
     # valid state
     result_3 = MySchema.new.validate({
