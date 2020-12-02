@@ -33,25 +33,15 @@ require 'smart_core/schema'
 - `nil` control: `filled`;
 - nested definitions: `do ... end`;
 - supported types: see `smart_types` gem;
-- strict modes and strict behavior:
-  - `strict!` DSL directive marks your schema as a strict schema (your hash can not have extra keys);
-  - `non_strict!` DSL directive marks your schema as non-strict schema (your hash can have extra keys);
-  - use `strict!` in any schema's context place to mark your current schema context as a strict;
-  - use `non_strict` in any schema's context place to mark your current schema context as a strict;
-  - use `schema(:strict)` to globally define strict schema (default behavior);
-  - use `schema(:non_strict)` to globally define non-strict schema;
-  - nested schemas inherits strict behavior from outer schemas;
-  - root schema is `:strict` by default;
-  - schema reopening without mode attribute does not change original schema mode
-    (you should manually pass a mode attribute to redefine already defined schema mode);
+- strict modes and strict behavior: `strict!`, `non_strict!`, `schema(:strict)`, `schema(:non_strict)`;
 
 ```ruby
 class MySchema < SmartCore::Schema
-  # you can mark root schema here:
+  # you can mark strict mode in root schema here:
   # non_strict!
   # strict!
 
-  schema do # or here with `schema(:strict)` (default in first invocation) or `schema(:non_strict)`
+  schema do # or here with `schema(:strict)` (default in first time) or `schema(:non_strict)`
     required(:key) do
       # inherits `:strict`
       optional(:data).type(:string).filled
@@ -64,7 +54,7 @@ class MySchema < SmartCore::Schema
       end
 
       optional(:another_nested) do
-        non_strict! # marks current nested schema as :non_strict
+        non_strict! # marks current nested schema as `:non_strict`
       end
     end
 
@@ -88,8 +78,8 @@ class MySchema < SmartCore::Schema
   # schema do
   #   non_strict!
   # end
-  #
-  # -- and (redefine nested schema behavior) --
+  
+  # you can redefine nested schema behavior:
   #
   # schema do
   #   optional(:another_nested) do
@@ -131,11 +121,11 @@ result = MySchema.new.validate(
 #  #<SmartCore::Schema::Result:0x00007ffcd8926990
 #  @errors={"key.data"=>[:non_filled], "key.value"=>[:invalid_type], "key.nested"=>[:required_key_not_found], "another_key"=>[:non_filled], "third_key"=>[:extra_key]},
 #  @extra_keys=#<Set: {"third_key"}>,
-#  @spread_keys=#<Set: {}>,
+#  @spread_keys=#<Set: {}>, (coming soon (spread keys of non-strict schemas))
 #  @source={:key=>{:data=>nil, :value=>"1", :name=>"D@iVeR"}, :another_key=>nil, :third_key=>"test"}>
 
 result.success? # => false
-result.spread_keys # => <Set: {}> (this feature is coming soon; returns spread keys of non-strict schemas)
+result.spread_keys # => <Set: {}> (coming soon (spread keys of non-strict schemas))
 result.extra_keys # => <Set: {"third_key"}>
 result.errors # =>
 {

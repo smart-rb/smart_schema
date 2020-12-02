@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 # [Unreleased]
 ### Added
 - Support for *strict* and *non-strict* schemas;
+  - `strict!` DSL directive marks your schema as a strict schema (your hash can not have extra keys);
+  - `non_strict!` DSL directive marks your schema as non-strict schema (your hash can have extra keys);
+  - use `strict!` in any schema's context place to mark your current schema context as a strict;
+  - use `non_strict` in any schema's context place to mark your current schema context as a strict;
+  - use `schema(:strict)` to globally define strict schema (default behavior);
+  - use `schema(:non_strict)` to globally define non-strict schema;
+  - nested schemas inherits strict behavior from outer schemas;
+  - root schema is `:strict` by default;
+  - schema reopening without mode attribute does not change original schema mode
+    (you should manually pass a mode attribute to redefine already defined schema mode);
 
 # [0.2.0] - 2020-11-09
 ### Added
