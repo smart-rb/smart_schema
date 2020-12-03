@@ -69,12 +69,12 @@ RSpec.describe SmartCore::Schema do
         value: 123,
         name: 'D@iVeR',
         rizdos: {
-          pui: 123, 
+          pui: 123,
           che: true, # spread-key (key from non-strict schema)
-          cheburek: { 
-            jaja: nil 
+          cheburek: {
+            jaja: nil
           },
-          urban_strike: {} 
+          urban_strike: {}
         },
         cheburek: {}, # extra-key (key from strict schema)
         urban_strike: {} # extra-key (key from strict schema)
@@ -91,7 +91,7 @@ RSpec.describe SmartCore::Schema do
       'b_key' => [:required_key_not_found],
       'c_key.itmo.gigabyte' => [:required_key_not_found],
       'key.cheburek' => [:extra_key],
-      'key.urban_strike' => [:extra_key],
+      'key.urban_strike' => [:extra_key]
     )
     expect(result_2.extra_keys).to contain_exactly(
       'key.cheburek',
