@@ -36,7 +36,7 @@ module SmartCore::Schema::DSL
 
   # @api private
   # @since 0.1.0
-  # @version 0.2.0
+  # @version 0.3.0
   module ClassMethods
     # @return [SmartCore::Schema::Checker]
     #
@@ -46,14 +46,15 @@ module SmartCore::Schema::DSL
       @__schema_checker__
     end
 
-    # @note nil strict mode means `do not change current mode`
     # @param strict_mode [NilClass, String, Symbol]
     # @param definitions [Block]
     # @return [void]
     #
+    # @note nil strict mode means `do not change current mode`
+    #
     # @api public
     # @since 0.1.0
-    # @version 0.2.0
+    # @version 0.3.0
     def schema(strict_mode = nil, &definitions)
       __schema_checker__.invoke_in_pipe do
         set_strict_mode(strict_mode)
@@ -64,7 +65,7 @@ module SmartCore::Schema::DSL
     # @return [void]
     #
     # @api public
-    # @since 0.2.0
+    # @since 0.3.0
     def strict!
       __schema_checker__.set_strict_mode(:strict)
     end
@@ -72,7 +73,7 @@ module SmartCore::Schema::DSL
     # @return [void]
     #
     # @api public
-    # @since 0.2.0
+    # @since 0.3.0
     def non_strict!
       __schema_checker__.set_strict_mode(:non_strict)
     end

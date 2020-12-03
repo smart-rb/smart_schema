@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-# @version 0.2.0
+# @version 0.3.0
 class SmartCore::Schema::Checker
   require_relative 'checker/verifiable_hash'
   require_relative 'checker/rules'
@@ -36,7 +36,7 @@ class SmartCore::Schema::Checker
   # @return [void]
   #
   # @api private
-  # @since 0.2.0
+  # @since 0.3.0
   def invoke_in_pipe(&checker_invokations)
     thread_safe { instance_eval(&checker_invokations) }
   end
@@ -45,7 +45,7 @@ class SmartCore::Schema::Checker
   # @return [void]
   #
   # @api private
-  # @since 0.2.0
+  # @since 0.3.0
   def set_strict_mode(strict_mode)
     thread_safe { apply_strict_mode(strict_mode) }
   end
@@ -93,7 +93,7 @@ class SmartCore::Schema::Checker
   # @return [void]
   #
   # @api private
-  # @since 0.2.0
+  # @since 0.3.0
   def apply_strict_mode(strict_mode)
     Reconciler::Constructor.set_strict_mode(reconciler, strict_mode)
   end

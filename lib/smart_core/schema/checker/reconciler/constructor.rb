@@ -2,18 +2,18 @@
 
 # @api private
 # @since 0.1.0
-# @version 0.2.0
+# @version 0.3.0
 module SmartCore::Schema::Checker::Reconciler::Constructor
   # @return [Hash<String,Boolean>]
   #
   # @api private
-  # @since 0.2.0
+  # @since 0.3.0
   STRICT_MODES = { strict: true, 'strict' => true, non_strict: false, 'non_strict' => true }.freeze
 
   # @return [Boolean]
   #
   # @pai private
-  # @since 0.2.0
+  # @since 0.3.0
   DEFAULT_STRICT_BEHAVIOR = STRICT_MODES[:strict] # NOTE: means `strict by default`
 
   class << self
@@ -32,18 +32,18 @@ module SmartCore::Schema::Checker::Reconciler::Constructor
     # @return [void]
     #
     # @api private
-    # @since 0.2.0
+    # @since 0.3.0
     def set_strict_mode(reconciler, strict_mode)
       return if strict_mode == nil
 
-      mode = STRICT_MODES.fetch(strict_mode) do
+      is_strict = STRICT_MODES.fetch(strict_mode) do
         raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE)
-          Unsupported schmea strict mode "#{strict_mode}".
+          Unsupported strict mode "#{strict_mode}".
           SmartCore::Schema supports "strict" and "non_strict" modes only.
         ERROR_MESSAGE
       end
 
-      reconciler.strict!(mode)
+      reconciler.strict!(is_strict)
     end
 
     # @param definitions [Proc, NilClass]

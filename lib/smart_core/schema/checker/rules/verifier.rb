@@ -2,6 +2,7 @@
 
 # @api private
 # @since 0.1.0
+# @version 0.3.0
 module SmartCore::Schema::Checker::Rules::Verifier
   require_relative 'verifier/result'
 
@@ -13,6 +14,7 @@ module SmartCore::Schema::Checker::Rules::Verifier
     #
     # @api private
     # @since 0.1.0
+    # @version 0.3.0
     def verify!(rule, matcher_options, verifiable_hash)
       SmartCore::Schema::Checker::Rules::Verifier::Result.new(rule).tap do |result|
         requirement = result << check_requirement(rule, verifiable_hash)

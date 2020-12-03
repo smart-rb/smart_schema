@@ -49,8 +49,8 @@ class SmartCore::Schema::Checker::Rules::Base
   #   @return [SmartCore::Schema::Checker::Rules::Requirement::Optional]
   #   @return [SmartCore::Schema::Checker::Rules::Requirement::Required]
 
-  # @param matcher_options [SmartCore::Schema::Checker::Reconciler::Matcher::Options]
   # @param verifiable_hash [Hash<String|Symbol,Any>]
+  # @param matcher_options [SmartCore::Schema::Checker::Reconciler::Matcher::Options]
   # @return [SmartCore::Schema::Checker::Rules::Verifier::Result]
   #
   # @api private
