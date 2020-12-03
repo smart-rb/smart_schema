@@ -7,13 +7,19 @@ RSpec.describe SmartCore::Schema do
 
   specify 'smoke' do
     class MySchema < SmartCore::Schema
-      schema do
+      strict!
+
+      schema(:non_strict) do
+        strict!
+
         required(:key) do
           optional(:data).type(:string)
           optional(:value).type(:numeric)
           required(:name).type(:string)
           required(:age).type(:integer)
           required(:rizdos) do
+            non_strict!
+
             required(:pui).type(SmartCore::Types::Value::String)
             required(:cheburek) do
               required(:jaja).filled
@@ -54,6 +60,7 @@ RSpec.describe SmartCore::Schema do
       'c_key' => [:required_key_not_found]
     )
     expect(result_1.extra_keys).to be_empty
+    expect(result_1.spread_keys).to be_empty
 
     # invalid schema
     result_2 = MySchema.new.validate({
@@ -61,9 +68,16 @@ RSpec.describe SmartCore::Schema do
         data: 123,
         value: 123,
         name: 'D@iVeR',
-        rizdos: { pui: 123, che: true, cheburek: { jaja: nil }, urban_strike: {} },
-        cheburek: {},
-        urban_strike: {}
+        rizdos: {
+          pui: 123,
+          che: true, # spread-key (key from non-strict schema)
+          cheburek: {
+            jaja: nil
+          },
+          urban_strike: {}
+        },
+        cheburek: {}, # extra-key (key from strict schema)
+        urban_strike: {} # extra-key (key from strict schema)
       },
       c_key: { itmo: {} }
     })
@@ -77,14 +91,17 @@ RSpec.describe SmartCore::Schema do
       'b_key' => [:required_key_not_found],
       'c_key.itmo.gigabyte' => [:required_key_not_found],
       'key.cheburek' => [:extra_key],
-      'key.urban_strike' => [:extra_key],
-      'key.rizdos.che' => [:extra_key]
+      'key.urban_strike' => [:extra_key]
     )
     expect(result_2.extra_keys).to contain_exactly(
       'key.cheburek',
-      'key.urban_strike',
-      'key.rizdos.che'
+      'key.urban_strike'
     )
+    # TODO: spread keys aggregation and check
+    # expect(result_2.spread_keys).to contain_exactly(
+    #   'key.rizdos.che'
+    # )
+    expect(result_2.spread_keys).to be_empty
 
     # valid state
     result_3 = MySchema.new.validate({
@@ -102,6 +119,7 @@ RSpec.describe SmartCore::Schema do
     expect(result_3.success?).to eq(true)
     expect(result_3.errors).to eq({})
     expect(result_3.extra_keys).to be_empty
+    expect(result_3.spread_keys).to be_empty
 
     expect(MySchema.new.valid?({})).to eq(false)
     expect(MySchema.new.valid?({
@@ -115,6 +133,63 @@ RSpec.describe SmartCore::Schema do
       b_key: 'some_string',
       c_key: { itmo: { gigabyte: 21.1 } }
     })).to eq(true)
+
+    class StrictByDefaultSchema < SmartCore::Schema
+      schema do
+        required(:jaga).type(:string)
+      end
+    end
+
+    result_4 = StrictByDefaultSchema.new.validate({ jaga: 'test', gaga: 123 })
+    expect(result_4.success?).to eq(false)
+    expect(result_4.failure?).to eq(true)
+    expect(result_4.extra_keys).to contain_exactly('gaga')
+    expect(result_4.spread_keys).to be_empty
+
+    class InheritableModeSchema < SmartCore::Schema
+      schema(:non_strict) do # non-strict
+        required(:kek) do # non-strict (inherited)
+          required(:pek) do # non-strict (inherited)
+            optional(:buba)
+          end
+
+          required(:jek) do # strict (manually defined)
+            strict!
+            optional(:biba)
+          end
+        end
+      end
+    end
+
+    result_5 = InheritableModeSchema.new.validate({
+      kek: {
+        gek: 1,
+        pek: {
+          check: 2, buba: 3
+        },
+        jek: {
+          aza: 2
+        }
+      },
+      fek: 5
+    })
+    expect(result_5.success?).to eq(false)
+    expect(result_5.failure?).to eq(true)
+    expect(result_5.extra_keys).to contain_exactly('kek.jek.aza')
+
+    class InitialNonStrictSchema < SmartCore::Schema
+      non_strict!
+
+      schema do
+        required(:pek)
+      end
+    end
+
+    result_6 = InitialNonStrictSchema.new.validate({ pek: 1, kek: 2 })
+    expect(result_6.success?).to eq(true)
+    expect(result_6.failure?).to eq(false)
+    expect(result_6.extra_keys).to be_empty
+    expect(result_6.spread_keys).to be_empty
 
     expect do # incompatible dsl (schema)
       Class.new(SmartCore::Schema) { schema { non_required } }

@@ -2,6 +2,7 @@
 
 # @api private
 # @since 0.1.0
+# @version 0.3.0
 class SmartCore::Schema::Checker::Reconciler
   require_relative 'reconciler/constructor'
   require_relative 'reconciler/matcher'
@@ -10,8 +11,10 @@ class SmartCore::Schema::Checker::Reconciler
   #
   # @api private
   # @since 0.1.0
+  # @version 0.3.0
   def initialize
     @rules = SmartCore::Schema::Checker::Rules.new
+    @strict = Constructor::DEFAULT_STRICT_BEHAVIOR
     @lock = SmartCore::Engine::Lock.new
   end
 
@@ -40,15 +43,24 @@ class SmartCore::Schema::Checker::Reconciler
     thread_safe { rules }
   end
 
+  # @return [Boolean]
+  #
+  # @api private
+  # @since 0.3.0
+  def __strict?
+    thread_safe { @strict }
+  end
+
   # @param schema_key [String, Symbol]
   # @param nested_definitions [Block]
   # @return [SmartCore::Schema::Checker::Rules::Required]
   #
   # @api public
   # @since 0.1.0
+  # @version 0.3.0
   def required(schema_key, &nested_definitions)
     thread_safe do
-      rule = SmartCore::Schema::Checker::Rules::Required.new(schema_key, &nested_definitions)
+      rule = SmartCore::Schema::Checker::Rules::Required.new(self, schema_key, &nested_definitions)
       rule.tap { rules[rule.schema_key] = rule }
     end
   end
@@ -59,11 +71,29 @@ class SmartCore::Schema::Checker::Reconciler
   #
   # @api public
   # @since 0.1.0
+  # @version 0.3.0
   def optional(schema_key, &nested_definitions)
     thread_safe do
-      rule = SmartCore::Schema::Checker::Rules::Optional.new(schema_key, &nested_definitions)
+      rule = SmartCore::Schema::Checker::Rules::Optional.new(self, schema_key, &nested_definitions)
       rule.tap { rules[rule.schema_key] = rule }
     end
+  end
+
+  # @param is_strict [Boolean]
+  # @return [void]
+  #
+  # @api public
+  # @since 0.3.0
+  def strict!(is_strict = Constructor::DEFAULT_STRICT_BEHAVIOR)
+    thread_safe { @strict = is_strict }
+  end
+
+  # @return [void]
+  #
+  # @api public
+  # @since 0.3.0
+  def non_strict!
+    thread_safe { strict!(Constructor::STRICT_MODES[:non_strict]) }
   end
 
   private

@@ -4,7 +4,7 @@
 
 Provides convenient and concise DSL to define complex schemas in easiest way and public validation interface to achieve a comfortable work with detailed validation result.
 
-Supports nested structures, type validation (via `smart_types`), required- and optional- schema keys, schema value presence validation, schema inheritance (soon), schema extending (soon) and schema composition (soon).
+Supports nested structures, type validation (via `smart_types`), required- and optional- schema keys, *strict* and *non-strict* schemas, schema value presence validation, schema inheritance (soon), schema extending (soon) and schema composition (soon).
 
 Works in predicate style and in OOP/Monadic result object style. Enjoy :)
 
@@ -33,17 +33,35 @@ require 'smart_core/schema'
 - `nil` control: `filled`;
 - nested definitions: `do ... end`;
 - supported types: see `smart_types` gem;
+- strict modes and strict behavior: `strict!`, `non_strict!`, `schema(:strict)`, `schema(:non_strict)`;
+- `:strict` is used by default (in first `schema` invokation);
+- you can make non-strict inner schemas inside strict schemas (and vise-versa);
+- inner schemas inherits their's mode from their's nearest outer schema (and can have own mode too);
 
 ```ruby
 class MySchema < SmartCore::Schema
-  schema do
+  # you can mark strict mode in root schema here:
+  #
+  # non_strict!
+  #
+  # -- or --
+  #
+  # strict!
+
+  schema do # or here with `schema(:strict)` (default in first time) or `schema(:non_strict)`
     required(:key) do
+      # inherits `:strict`
       optional(:data).type(:string).filled
       optional(:value).type(:numeric)
       required(:name).type(:string)
 
       required(:nested) do
+        # inherits `:strict`
         optional(:version).filled
+      end
+
+      optional(:another_nested) do
+        non_strict! # marks current nested schema as `:non_strict`
       end
     end
 
@@ -54,6 +72,30 @@ class MySchema < SmartCore::Schema
   #
   # schema do
   #   required(:third_key).filled.type(:string)
+  # end
+
+  # you can redefine strict behavior of already defined schema:
+  #
+  # schema(:non_strict) do
+  #   ...
+  # end
+  #
+  # -- or --
+  #
+  # schema do
+  #   non_strict!
+  # end
+  #
+  # -- or --
+  #
+  # non_strict!
+  
+  # you can redefine nested schema behavior:
+  #
+  # schema do
+  #   optional(:another_nested) do
+  #     strict! # change from :non_strict to :strict
+  #   end
   # end
 end
 ```
@@ -90,9 +132,11 @@ result = MySchema.new.validate(
 #  #<SmartCore::Schema::Result:0x00007ffcd8926990
 #  @errors={"key.data"=>[:non_filled], "key.value"=>[:invalid_type], "key.nested"=>[:required_key_not_found], "another_key"=>[:non_filled], "third_key"=>[:extra_key]},
 #  @extra_keys=#<Set: {"third_key"}>,
+#  @spread_keys=#<Set: {}>, (coming soon (spread keys of non-strict schemas))
 #  @source={:key=>{:data=>nil, :value=>"1", :name=>"D@iVeR"}, :another_key=>nil, :third_key=>"test"}>
 
 result.success? # => false
+result.spread_keys # => <Set: {}> (coming soon (spread keys of non-strict schemas))
 result.extra_keys # => <Set: {"third_key"}>
 result.errors # =>
 {
@@ -115,8 +159,8 @@ Possible errors:
 ## Roadmap
 
 - **(0.x.0)** - value-validation layer;
-- **(0.3.0)** - error messages (that are consistent with error codes), with a support for error-code-auto-mappings for error messages via explicit hashes or via file (yaml, json and other formats);
-- **(0.3.0)** - optional support for non-strict schemas (that allows extra keys);
+- **(0.x.0)** - error messages (that are consistent with error codes), with a support for error-code-auto-mappings for error messages via explicit hashes or via file (yaml, json and other formats);
+- **(0.3.0)** - spread keys of non-strict schemas in validation result;
 - **(0.4.0)** - schema inheritance;
 - **(0.4.0)** - schema composition (`required(:key).schema(SchemaClass)`) (`compose_with(AnotherSchema)`);
 - **(0.4.0)** - dependable schema checking (sample: if one key exist (or not) we should check another (or not), and vice verca) (mb `if(:_key_)` rule);

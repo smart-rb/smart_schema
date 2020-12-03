@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-# @api private
-# @since 0.1.0
 class SmartCore::Schema::Checker::Rules::Options
+  # @api private
+  # @since 0.1.0
   class Filled < Empty
-    # @note Constant is used only for clarity (for other developers).
+    # @note Constant is used only for other developers.
     # @return [Symbol]
     #
     # @api private
