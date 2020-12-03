@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-# [Unreleased]
+# [0.3.0] - 2020-12-03
 ### Added
 - Support for *strict* and *non-strict* schemas;
   - `strict!` DSL directive marks your schema as a strict schema (your hash can not have extra keys);

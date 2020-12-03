@@ -5,7 +5,7 @@ module SmartCore
     # @return [String]
     #
     # @api public
-    # @since 0.2.0
-    VERSION = '0.2.0'
+    # @since 0.3.0
+    VERSION = '0.3.0'
   end
 end

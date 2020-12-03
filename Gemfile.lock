@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    smart_schema (0.2.0)
+    smart_schema (0.3.0)
       smart_engine (~> 0.8)
       smart_types (~> 0.1)
 
@@ -82,8 +82,8 @@ GEM
       simplecov-html (~> 0.11)
     simplecov-html (0.12.3)
     smart_engine (0.8.0)
-    smart_types (0.1.0)
-      smart_engine (~> 0.6)
+    smart_types (0.2.0)
+      smart_engine (~> 0.7)
     thread_safe (0.3.6)
     tzinfo (1.2.8)
       thread_safe (~> 0.1)
@@ -103,4 +103,4 @@ DEPENDENCIES
   smart_schema!
 
 BUNDLED WITH
-   2.1.4
+   2.2.0.rc.1
