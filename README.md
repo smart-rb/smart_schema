@@ -1,4 +1,4 @@
-# SmartCore::Schema [![Gem Version](https://badge.fury.io/rb/smart_schema.svg)](https://badge.fury.io/rb/smart_schema) [![Build Status](https://travis-ci.org/smart-rb/smart_schema.svg?branch=master)](https://travis-ci.org/smart-rb/smart_schema)
+# SmartCore::Schema [![Gem Version](https://badge.fury.io/rb/smart_schema.svg)](https://badge.fury.io/rb/smart_schema)
 
 `SmartCore::Schema` is a schema validator for `Hash`-like data structures in declarative DSL-powered style.
 
@@ -162,6 +162,7 @@ Possible errors:
 
 ## Roadmap
 
+- **(0.x.0)** - migrate to `GitHub Actions` (CI);
 - **(0.x.0)** - value-validation layer;
 - **(0.x.0)** - error messages (that are consistent with error codes), with a support for error-code-auto-mappings for error messages via explicit hashes or via file (yaml, json and other formats);
 - **(0.3.0)** - spread keys of non-strict schemas in validation result;

@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+# [0.4.0] - 2020-01-18
+## Changed
+- No more `TravisCI` (TODO: migrate to `GitHub Actions`);
+
 # [0.3.0] - 2020-12-03
 ### Added
 - Support for *strict* and *non-strict* schemas;
