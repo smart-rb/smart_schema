@@ -2,6 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 # [0.4.0] - 2020-01-18
+## Added
+- Support for **Ruby@3**;
+
 ## Changed
 - No more `TravisCI` (TODO: migrate to `GitHub Actions`);
 - Updated development dependencies;
