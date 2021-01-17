@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'lib/smart_core/schema/version'
 
 Gem::Specification.new do |spec|
@@ -29,7 +31,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'smart_engine', '~> 0.11'
-  spec.add_dependency 'smart_types',  '~> 0.3'
+  spec.add_dependency 'smart_types',  '~> 0.4'
 
   spec.add_development_dependency 'pry',              '~> 0.13'
   spec.add_development_dependency 'bundler',          '~> 2.2'

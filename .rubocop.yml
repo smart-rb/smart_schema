@@ -12,7 +12,7 @@ AllCops:
     - spec/**/*.rb
     - Gemfile
     - Rakefile
-    - smart_operation.gemspec
+    - smart_schema.gemspec
     - bin/console
 
 # NOTE: It is not suitable for infrastracture-level frameworks
