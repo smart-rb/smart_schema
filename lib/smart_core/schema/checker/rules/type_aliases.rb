@@ -2,6 +2,7 @@
 
 # @api private
 # @since 0.1.0
+# rubocop:disable Style/StaticClass
 class SmartCore::Schema::Checker::Rules
   # @todo rework with smart_type-system
   # @note non-frized constant is used for temporary extendability
@@ -53,3 +54,4 @@ class SmartCore::Schema::Checker::Rules
   }
   # rubocop:enable Style/MutableConstant
 end
+# rubocop:enable Style/StaticClass

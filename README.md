@@ -175,6 +175,28 @@ Possible errors:
 
 ---
 
+## Build
+
+- run tests:
+
+```shell
+bundle exec rake rspec
+```
+
+- run code style checks:
+
+```shell
+bundle exec rake rubocop
+```
+
+- run code style checks with auto-correction:
+
+```shell
+bundle exec rake rubocop -A
+```
+
+---
+
 ## Contributing
 
 - Fork it ( https://github.com/smart-rb/smart_schema )
