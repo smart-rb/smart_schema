@@ -5,10 +5,10 @@ require_relative 'lib/smart_core/schema/version'
 Gem::Specification.new do |spec|
   spec.required_ruby_version = Gem::Requirement.new('>= 2.5.8')
 
-  spec.name    = "smart_schema"
+  spec.name    = 'smart_schema'
   spec.version = SmartCore::Schema::VERSION
-  spec.authors = ["Rustam Ibragimov"]
-  spec.email   = ["iamdaiver@gmail.com"]
+  spec.authors = ['Rustam Ibragimov']
+  spec.email   = ['iamdaiver@gmail.com']
 
   spec.summary     = 'SmartCore::Schema is a schema validator for Hash-like data structures'
   spec.description = 'SmartCore::Schema is a schema validator for Hash-like data structures'
