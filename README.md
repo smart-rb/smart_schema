@@ -40,28 +40,18 @@ require 'smart_core/schema'
 
 ```ruby
 class MySchema < SmartCore::Schema
-  # you can mark strict mode in root schema here:
-  #
-  # non_strict!
-  #
-  # -- or --
-  #
-  # strict!
-
   schema do # or here with `schema(:strict)` (default in first time) or `schema(:non_strict)`
     required(:key) do
-      # inherits `:strict`
       optional(:data).type(:string).filled
       optional(:value).type(:numeric)
       required(:name).type(:string)
 
       required(:nested) do
-        # inherits `:strict`
         optional(:version).filled
       end
 
       optional(:another_nested) do
-        non_strict! # marks current nested schema as `:non_strict`
+        non_strict!
       end
     end
 
@@ -70,39 +60,6 @@ class MySchema < SmartCore::Schema
 end
 ```
 
-```ruby
-# you can open already defined schema and continue schema definitioning:
-
-schema do
-  required(:third_key).filled.type(:string)
-end
-```
-
-```ruby
-# you can redefine strict behavior of already defined schema:
-
-schema(:non_strict) do
-  # ...
-end
-
-# -- or --
-schema do
-  non_strict!
-end
-
-# -- or --
-non_strict!
-```
-
-```ruby
-# you can redefine nested schema behavior:
-
-schema do
-  optional(:another_nested) do
-    strict! # change from :non_strict to :strict
-  end
-end
-```
 
 ```ruby
 MySchema.new.valid?({
