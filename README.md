@@ -40,7 +40,7 @@ require 'smart_core/schema'
 
 ```ruby
 class MySchema < SmartCore::Schema
-  schema do # or here with `schema(:strict)` (default in first time) or `schema(:non_strict)`
+  schema do
     required(:key) do
       optional(:data).type(:string).filled
       optional(:value).type(:numeric)
@@ -88,13 +88,6 @@ result = MySchema.new.validate(
   another_key: nil,
   third_key: 'test'
 )
-
-# => outputs:
-#  #<SmartCore::Schema::Result:0x00007ffcd8926990
-#  @errors={"key.data"=>[:non_filled], "key.value"=>[:invalid_type], "key.nested"=>[:required_key_not_found], "another_key"=>[:non_filled], "third_key"=>[:extra_key]},
-#  @extra_keys=#<Set: {"third_key"}>,
-#  @spread_keys=#<Set: {}>, (coming soon (spread keys of non-strict schemas))
-#  @source={:key=>{:data=>nil, :value=>"1", :name=>"D@iVeR"}, :another_key=>nil, :third_key=>"test"}>
 
 result.success? # => false
 result.spread_keys # => <Set: {}> (coming soon (spread keys of non-strict schemas))
