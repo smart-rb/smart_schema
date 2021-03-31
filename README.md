@@ -171,7 +171,8 @@ Possible errors:
 - **(0.4.0)** - dependable schema checking (sample: if one key exist (or not) we should check another (or not), and vice verca) (mb `if(:_key_)` rule);
 - **(0.6.0)** - `smart_type-system` integration;
 - **(0.7.0)** - support for another data structures (such as YAML strings, JSON strings, `Struct`, `OpenStruct`s, custom `Object`s  and etc);
-- **(0.8.0)** - think about pattern matching;
+- **(0.8.0)** - mixin-based implementation;
+- **(0.x.0)** - think about pattern matching;
 
 ---
 
