@@ -162,6 +162,7 @@ Possible errors:
 
 ## Roadmap
 
+- **(0.x.0)** - an abiltiy to represent the required schema as a string (conviniet way to check what schema is defained internally when we work wtih a dynamic schema definition or in a console);
 - **(0.x.0)** - migrate to `GitHub Actions` (CI);
 - **(0.x.0)** - value-validation layer;
 - **(0.x.0)** - error messages (that are consistent with error codes), with a support for error-code-auto-mappings for error messages via explicit hashes or via file (yaml, json and other formats);
