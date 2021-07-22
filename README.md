@@ -1,4 +1,4 @@
-# SmartCore::Schema [![Gem Version](https://badge.fury.io/rb/smart_schema.svg)](https://badge.fury.io/rb/smart_schema)
+# SmartCore::Schema &middot; [![Supporting](https://github.com/Cado-Labs/cado-labs-logos/blob/main/cado_labs_badge.png)](https://github.com/Cado-Labs/) &middot; [![Gem Version](https://badge.fury.io/rb/smart_schema.svg)](https://badge.fury.io/rb/smart_schema)
 
 `SmartCore::Schema` is a schema validator for `Hash`-like data structures in declarative DSL-powered style.
 
@@ -7,6 +7,16 @@ Provides convenient and concise DSL to define complex schemas in easiest way and
 Supports nested structures, type validation (via `smart_types`), required- and optional- schema keys, *strict* and *non-strict* schemas, schema value presence validation, schema inheritance (soon), schema extending (soon) and schema composition (soon).
 
 Works in predicate style and in OOP/Monadic result object style. Enjoy :)
+
+---
+
+<p>
+  <a href="https://github.com/Cado-Labs">
+    <img src="https://github.com/Cado-Labs/cado-labs-logos/blob/main/cado_labs_supporting.svg" alt="Supported by Cado Labs" />
+  </a>
+</p>
+
+---
 
 ## Installation
 
@@ -211,6 +221,12 @@ bundle exec rake rubocop -A
 ## License
 
 Released under MIT License.
+
+## Supporting
+
+<a href="https://github.com/Cado-Labs">
+  <img src="https://github.com/Cado-Labs/cado-labs-logos/blob/main/cado_labs_logo.png" alt="Supported by Cado Labs" />
+</a>
 
 ## Authors
 
