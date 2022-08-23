@@ -172,6 +172,7 @@ Possible errors:
 
 ## Roadmap
 
+- **(x.x.x)** - mutable schemas (value convertion during schema checking with returning the new coerced data structure);
 - **(x.x.x)** - public interface for type aliasing (custom type alias registration API);
 - **(x.x.x)** - support for `Array`-like data structures;
 - **(0.x.0)** - an abiltiy to represent the required schema as a string (conviniet way to check what schema is defained internally when we work wtih a dynamic schema definition or in a console);
