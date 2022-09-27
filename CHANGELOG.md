@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+# [0.6.0] - 2022-09-27
+## Fixed
+- Now `Forwardable` module has explicit requiring in order to support *Ruby@3.1* (`lib/smart_core/smart_schema.rb#6`);
+
 # [0.5.0] - 2021-01-18
 ## Changed
 - Updated `smart_types` dependency (`~> 0.4.0`) to guarantee **Ruby@3** compatability;

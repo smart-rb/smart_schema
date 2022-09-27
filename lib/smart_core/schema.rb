@@ -3,6 +3,7 @@
 require 'smart_core'
 require 'smart_core/types'
 require 'set'
+require 'forwardable'
 
 # @api pulic
 # @since 0.1.0
