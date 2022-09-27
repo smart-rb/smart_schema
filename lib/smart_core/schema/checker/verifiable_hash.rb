@@ -53,11 +53,12 @@ class SmartCore::Schema::Checker::VerifiableHash
   def fetch(key)
     # rubocop:disable Style/RedundantBegin
     @lock.synchronize do
-      begin
-        source.fetch(key)
-      rescue KeyError
-        source.fetch(key.to_sym)
-      end
+      # @note
+      #   Previously we used exceptional flow "hash.fetch(key) rescue hash.fetch(key.to_sym)"
+      #   This flow generates many of useless string objects (error messages) for hashesh that have
+      #   symbol keys. So, the #key?-oriented flow is better (generates fewer number of objects
+      #   statistically)
+      source.key?(key) ? source.fetch(key) : source.fetch(key.to_sym)
     end
     # rubocop:enable Style/RedundantBegin
   end

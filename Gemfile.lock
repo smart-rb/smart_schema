@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    smart_schema (0.5.0)
+    smart_schema (0.6.0)
       smart_engine (~> 0.11)
       smart_types (~> 0.4)
 
@@ -83,8 +83,8 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.2)
-    smart_engine (0.11.0)
-    smart_types (0.4.0)
+    smart_engine (0.12.0)
+    smart_types (0.7.0)
       smart_engine (~> 0.11)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
@@ -104,4 +104,4 @@ DEPENDENCIES
   smart_schema!
 
 BUNDLED WITH
-   2.2.3
+   2.3.0.dev
