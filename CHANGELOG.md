@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+# [0.7.0] - 2022-09-28
+## Changed
+- Started the total code refactoring in order to decrease object and memory allocations:
+  - Decreased object allocations in `SmartCore::Schema::Checker::VerifiableHash#fetch(key)`
+
 # [0.6.0] - 2022-09-27
 ## Added
 - Now `Forwardable` module has explicit requiring in order to support *Ruby@3.1* (`lib/smart_core/smart_schema.rb#6`);
