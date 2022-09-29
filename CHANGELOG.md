@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
   - the one mutex of `SmartCore::Schema::Checker` is enough cuz this mutex covers the entire validation process;
   - more retained objects in `SmartCore::Schema::Checker::Rules` (cache layer for rule names);
 - Updated development dependencies;
-- Updated `smart_engine` dependency (`0.7` -> `0.8`);
+- Updated `smart_engine` dependency (`~> 0.11` -> `~> 0.13`);
 
 # [0.7.0] - 2022-09-28
 ## Changed
