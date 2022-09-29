@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+# [0.9.0] - 2022-09-30
+## Changed
+- Reduced context switching count during lock operations (migrate from `SmartCore::Engine::Lock` to `SmartCore::Engine::ReadWriteLock`);
+
 # [0.8.0] - 2022-09-30
 ## Changed
 - Reduced object allocations and mutex usage:
