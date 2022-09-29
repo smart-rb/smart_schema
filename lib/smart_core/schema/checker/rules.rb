@@ -2,6 +2,7 @@
 
 # @api private
 # @since 0.1.0
+# @version 0.8.0
 class SmartCore::Schema::Checker::Rules
   require_relative 'rules/type_aliases'
   require_relative 'rules/base'
@@ -20,9 +21,10 @@ class SmartCore::Schema::Checker::Rules
   #
   # @api private
   # @since 0.1.0
+  # @version 0.8.0
   def initialize
     @rules = {}
-    @lock = SmartCore::Engine::Lock.new
+    @cache = SmartCore::Engine::Cache.new
   end
 
   # @param schema_key [String]
@@ -31,8 +33,10 @@ class SmartCore::Schema::Checker::Rules
   #
   # @api private
   # @since 0.1.0
+  # @version 0.8..0
   def []=(schema_key, rule)
-    thread_safe { rules[schema_key] = rule }
+    cache.clear
+    rules[schema_key] = rule
   end
 
   # @param block [Block]
@@ -43,8 +47,9 @@ class SmartCore::Schema::Checker::Rules
   #
   # @api private
   # @since 0.1.0
+  # @version 0.8.0
   def each(&block)
-    thread_safe { block_given? ? rules.each_pair(&block) : rules.each_pair }
+    block_given? ? rules.each_pair(&block) : rules.each_pair
   end
 
   # @param block [Block]
@@ -54,16 +59,18 @@ class SmartCore::Schema::Checker::Rules
   #
   # @api private
   # @since 0.1.0
+  # @version 0.8.0
   def each_rule(&block)
-    thread_safe { block_given? ? rules.each_value(&block) : rules.each_value }
+    block_given? ? rules.each_value(&block) : rules.each_value
   end
 
   # @return [Array<String>]
   #
   # @api private
   # @since 0.1.0
+  # @version 0.8.0
   def keys
-    thread_safe { rules.keys }
+    cache.read(:keys) { rules.keys }
   end
 
   private
@@ -74,12 +81,9 @@ class SmartCore::Schema::Checker::Rules
   # @since 0.1.0
   attr_reader :rules
 
-  # @param block [Block]
-  # @return [Any]
+  # @return [SmartCore::Engine::Cache]
   #
   # @api private
-  # @since 0.1.0
-  def thread_safe(&block)
-    @lock.synchronize(&block)
-  end
+  # @since 0.8.0
+  attr_reader :cache
 end

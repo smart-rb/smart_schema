@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+# [0.8.0] - 2022-09-30
+## Changed
+- Decreased object allocations and mutex usage
+  - the one mutex of `SmartCore::Schema::Checker` is enough cuz this mutex covers the entire validation process);
+  - more retained objects in `SmartCore::Schema::Checker::Rules` (cache layer for rule names);
+- Updated development dependencies;
+- Updated `smart_engine` dependency (`0.7` -> `0.8`);
+
 # [0.7.0] - 2022-09-28
 ## Changed
 - Started the total code refactoring in order to decrease object and memory allocations:

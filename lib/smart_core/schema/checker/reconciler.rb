@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-# @version 0.3.0
+# @version 0.8.0
 class SmartCore::Schema::Checker::Reconciler
   require_relative 'reconciler/constructor'
   require_relative 'reconciler/matcher'
@@ -15,7 +15,6 @@ class SmartCore::Schema::Checker::Reconciler
   def initialize
     @rules = SmartCore::Schema::Checker::Rules.new
     @strict = Constructor::DEFAULT_STRICT_BEHAVIOR
-    @lock = SmartCore::Engine::Lock.new
   end
 
   # @param verifiable_hash [SmartCore::Schema::Checker::VerifiableHash]
@@ -23,8 +22,9 @@ class SmartCore::Schema::Checker::Reconciler
   #
   # @api private
   # @since 0.1.0
+  # @version 0.8.0
   def __match!(verifiable_hash)
-    thread_safe { SmartCore::Schema::Checker::Reconciler::Matcher.match(self, verifiable_hash) }
+    SmartCore::Schema::Checker::Reconciler::Matcher.match(self, verifiable_hash)
   end
 
   # @return [SmartCore::Schema::Checker::Rules::ExtraKeys]
@@ -39,16 +39,18 @@ class SmartCore::Schema::Checker::Reconciler
   #
   # @api private
   # @since 0.1.0
+  # @version 0.8.0
   def __contract_rules
-    thread_safe { rules }
+    rules
   end
 
   # @return [Boolean]
   #
   # @api private
   # @since 0.3.0
+  # @version 0.8.0
   def __strict?
-    thread_safe { @strict }
+    @strict
   end
 
   # @param schema_key [String, Symbol]
@@ -57,12 +59,10 @@ class SmartCore::Schema::Checker::Reconciler
   #
   # @api public
   # @since 0.1.0
-  # @version 0.3.0
+  # @version 0.8.0
   def required(schema_key, &nested_definitions)
-    thread_safe do
-      rule = SmartCore::Schema::Checker::Rules::Required.new(self, schema_key, &nested_definitions)
-      rule.tap { rules[rule.schema_key] = rule }
-    end
+    rule = SmartCore::Schema::Checker::Rules::Required.new(self, schema_key, &nested_definitions)
+    rule.tap { rules[rule.schema_key] = rule }
   end
 
   # @param schema_key [String, Symbol]
@@ -71,12 +71,10 @@ class SmartCore::Schema::Checker::Reconciler
   #
   # @api public
   # @since 0.1.0
-  # @version 0.3.0
+  # @version 0.8.0
   def optional(schema_key, &nested_definitions)
-    thread_safe do
-      rule = SmartCore::Schema::Checker::Rules::Optional.new(self, schema_key, &nested_definitions)
-      rule.tap { rules[rule.schema_key] = rule }
-    end
+    rule = SmartCore::Schema::Checker::Rules::Optional.new(self, schema_key, &nested_definitions)
+    rule.tap { rules[rule.schema_key] = rule }
   end
 
   # @param is_strict [Boolean]
@@ -84,16 +82,18 @@ class SmartCore::Schema::Checker::Reconciler
   #
   # @api public
   # @since 0.3.0
+  # @version 0.8.0
   def strict!(is_strict = Constructor::DEFAULT_STRICT_BEHAVIOR)
-    thread_safe { @strict = is_strict }
+    @strict = is_strict
   end
 
   # @return [void]
   #
   # @api public
   # @since 0.3.0
+  # @version 0.8.0
   def non_strict!
-    thread_safe { strict!(Constructor::STRICT_MODES[:non_strict]) }
+    strict!(Constructor::STRICT_MODES[:non_strict])
   end
 
   private
@@ -103,13 +103,4 @@ class SmartCore::Schema::Checker::Reconciler
   # @api private
   # @since 0.1.0
   attr_reader :rules
-
-  # @param block [Block]
-  # @return [Any]
-  #
-  # @api private
-  # @since 0.1.0
-  def thread_safe(&block)
-    @lock.synchronize(&block)
-  end
 end

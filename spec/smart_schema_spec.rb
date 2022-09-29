@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Naming/VariableNumber
 RSpec.describe SmartCore::Schema do
   it 'has a version number' do
     expect(SmartCore::Schema::VERSION).not_to be nil
@@ -200,3 +201,4 @@ RSpec.describe SmartCore::Schema do
     end.to raise_error(::SmartCore::Schema::ArgumentError)
   end
 end
+# rubocop:enable Naming/VariableNumber

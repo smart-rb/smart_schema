@@ -2,6 +2,7 @@
 
 # @api private
 # @since 0.1.0
+# @version 0.8.0
 class SmartCore::Schema::Checker::Rules::Options
   require_relative 'options/empty'
   require_relative 'options/type'
@@ -15,7 +16,6 @@ class SmartCore::Schema::Checker::Rules::Options
   def initialize(rule)
     @type = Empty.new(rule)
     @filled = Empty.new(rule)
-    @lock = SmartCore::Engine::Lock.new
   end
 
   # @return [SmartCore::Schema::Checker::Rules::Options::Type]
@@ -23,8 +23,9 @@ class SmartCore::Schema::Checker::Rules::Options
   #
   # @api private
   # @since 0.1.0
+  # @version 0.8.0
   def type
-    @lock.synchronize { @type }
+    @type
   end
 
   # @param option [SmartCore::Schema::Checker::Rules::Options::Type]
@@ -32,8 +33,9 @@ class SmartCore::Schema::Checker::Rules::Options
   #
   # @api private
   # @since 0.1.0
+  # @version 0.8.0
   def type=(option)
-    @lock.synchronize { @type = option }
+    @type = option
   end
 
   # @return [SmartCore::Schema::Checker::Rules::Options::Filled]
@@ -41,8 +43,9 @@ class SmartCore::Schema::Checker::Rules::Options
   #
   # @api private
   # @since 0.1.0
+  # @version 0.8.0
   def filled
-    @lock.synchronize { @filled }
+    @filled
   end
 
   # @param option [SmartCore::Schema::Checker::Rules::Options::Filled]
@@ -50,7 +53,8 @@ class SmartCore::Schema::Checker::Rules::Options
   #
   # @api private
   # @since 0.1.0
+  # @version 0.8.0
   def filled=(option)
-    @lock.synchronize { @filled = option }
+    @filled = option
   end
 end

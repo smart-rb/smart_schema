@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-# @version 0.3.0
+# @version 0.8.0
 class SmartCore::Schema::Checker::Rules::Base
   # @return [String]
   #
@@ -35,9 +35,8 @@ class SmartCore::Schema::Checker::Rules::Base
   #
   # @api private
   # @since 0.1.0
-  # @version 0.3.0
+  # @version 0.8.0
   def initialize(root_reconciler, schema_key, &nested_definitions)
-    @lock = SmartCore::Engine::Lock.new
     @root_reconciler = root_reconciler
     @schema_key = SmartCore::Schema::KeyControl.normalize(schema_key)
     @options = SmartCore::Schema::Checker::Rules::Options.new(self)
@@ -68,12 +67,11 @@ class SmartCore::Schema::Checker::Rules::Base
   #
   # @api public
   # @since 0.1.0
+  # @version 0.8.0
   def type(required_type, &nested_definitions)
-    thread_safe do
-      tap do
-        options.type = SmartCore::Schema::Checker::Rules::Options::Type.new(self, required_type)
-        define_nested_reconciler(&nested_definitions)
-      end
+    tap do
+      options.type = SmartCore::Schema::Checker::Rules::Options::Type.new(self, required_type)
+      define_nested_reconciler(&nested_definitions)
     end
   end
 
@@ -82,12 +80,11 @@ class SmartCore::Schema::Checker::Rules::Base
   #
   # @api public
   # @since 0.1.0
+  # @version 0.8.0
   def filled(&nested_definitions)
-    thread_safe do
-      tap do
-        options.filled = SmartCore::Schema::Checker::Rules::Options::Filled.new(self)
-        define_nested_reconciler(&nested_definitions)
-      end
+    tap do
+      options.filled = SmartCore::Schema::Checker::Rules::Options::Filled.new(self)
+      define_nested_reconciler(&nested_definitions)
     end
   end
 
@@ -109,13 +106,5 @@ class SmartCore::Schema::Checker::Rules::Base
     end
 
     type(:hash).filled
-  end
-
-  # @return [Any]
-  #
-  # @api private
-  # @since 0.1.0
-  def thread_safe(&block)
-    @lock.synchronize(&block)
   end
 end
