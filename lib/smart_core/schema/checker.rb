@@ -2,7 +2,6 @@
 
 # @api private
 # @since 0.1.0
-# @version 0.3.0
 # @version 0.9.0
 class SmartCore::Schema::Checker
   require_relative 'checker/verifiable_hash'
