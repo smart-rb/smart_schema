@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+# [0.10.0] - 2022-10-16
+## Changed
+- Updated `smart_engine` dependency with a `SmartCore::Engine::ReadWriteLock` fixes;
+
 # [0.9.0] - 2022-09-30
 ## Changed
 - Reduced context switching count during lock operations (migrate from `SmartCore::Engine::Lock` to `SmartCore::Engine::ReadWriteLock`);
