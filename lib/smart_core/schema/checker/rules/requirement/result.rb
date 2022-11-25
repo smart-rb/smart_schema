@@ -49,8 +49,8 @@ class SmartCore::Schema::Checker::Rules::Requirement::Result
     @key_exists = key_exists
     @success = required ? key_exists : true
     @failure = required ? !key_exists : false
-    @error = required && !key_exists ? ERROR_CODE : nil
-    @message = required && !key_exists ? "Required key :#{key} not found" : nil
+    @error = (required && !key_exists) ? ERROR_CODE : nil
+    @message = (required && !key_exists) ? "Required key :#{key} not found" : nil
   end
 
   # @return [Boolean]

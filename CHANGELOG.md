@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+# [0.11.0] - 2022-11-25
+## Changed
+- Reduced object allocation count inside the type validation logic (updated `smart_types` to `~> 0.8`);
+- Support for *Ruby@2.5* and *Ruby@2.6* has ended;
+- Updated development dependencies;
+
 # [0.10.0] - 2022-10-16
 ## Changed
 - Updated `smart_engine` dependency with a `SmartCore::Engine::ReadWriteLock` fixes;

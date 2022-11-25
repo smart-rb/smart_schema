@@ -3,7 +3,7 @@
 require_relative 'lib/smart_core/schema/version'
 
 Gem::Specification.new do |spec|
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.5.8')
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.7')
 
   spec.name    = 'smart_schema'
   spec.version = SmartCore::Schema::VERSION
@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'smart_engine', '~> 0.17'
-  spec.add_dependency 'smart_types',  '~> 0.4'
+  spec.add_dependency 'smart_types',  '~> 0.8'
 
   spec.add_development_dependency 'pry',              '~> 0.13'
   spec.add_development_dependency 'bundler',          '~> 2.2'
