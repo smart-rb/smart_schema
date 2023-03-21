@@ -172,6 +172,7 @@ Possible errors:
 
 ## Roadmap
 
+- **(x.x.x)** - support for `.cast` in type definitions;
 - **(x.x.x)** - mutable schemas (value convertion during schema checking with returning the new coerced data structure);
 - **(x.x.x)** - public interface for type aliasing (custom type alias registration API);
 - **(x.x.x)** - support for `Array`-like data structures;
