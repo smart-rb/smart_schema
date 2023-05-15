@@ -189,6 +189,7 @@ Possible errors:
 - **(0.9.0)** - support for another data structures (such as YAML strings, JSON strings, `Struct`, `OpenStruct`s, custom `Object`s  and etc);
 - **(0.10.0)** - mixin-based implementation;
 - **(0.x.0)** - think about pattern matching;
+- **(0.x.0)** - dependable schema checks: we can conditionally check some parts of schema stracture that depends on schema key values;
 
 ---
 
