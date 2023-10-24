@@ -190,6 +190,7 @@ Possible errors:
 - **(0.10.0)** - mixin-based implementation;
 - **(0.x.0)** - think about pattern matching;
 - **(0.x.0)** - dependable schema checks: we can conditionally check some parts of schema stracture that depends on schema key values;
+- **(0.x.0)** - support for dynamic keys, when the key name can have any name and can be a value or a schema;
 
 ---
 
