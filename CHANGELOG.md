@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+# [0.12.0] - 2026-02-17
+## Added
+- Plugin ecosystem;
+- Support for **Ruby@4.x**;
+- Support for `dry-types` type system;
+- An ability to chose the preferred type system (globally at the moment):
+  - supports `smart-types` (by default);
+  - supports `dry-types` (as a plugin);
+
 # [0.11.0] - 2022-11-25
 ## Changed
 - Reduced object allocation count inside the type validation logic (updated `smart_types` to `~> 0.8`);

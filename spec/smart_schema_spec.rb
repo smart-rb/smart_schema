@@ -6,7 +6,64 @@ RSpec.describe SmartCore::Schema do
     expect(SmartCore::Schema::VERSION).not_to be nil
   end
 
+  specify 'test dry-types' do
+    SmartCore::Schema::Configuration.configure { |conf| conf.type_system = :dry_types }
+    SmartCore::Schema.type_system.type_alias(:integer, Dry::Types['integer'])
+
+    class DryTypesTestingSchema < SmartCore::Schema
+      schema do
+        required(:date).type(Dry::Types['string']) # object-style
+        required(:memo).type(:integer) # aliase-style
+      end
+    end
+
+    expect do
+      Class.new(SmartCore::Schema) do
+        schema do
+          required(:mega).type(Object) # FAIL: dry-types requires Dry::Types::Type objects!
+        end
+      end
+    end.to raise_error(SmartCore::Schema::ArgumentError)
+
+    # expect do
+      # class SomeFailableSchema < SmartCore::Schema
+      #   schema do
+      #     requried(:pek).type(:kek)
+      #   end
+      # end
+    # end
+
+    result_1 = DryTypesTestingSchema.new.validate({ date: 123, memo: '123' })
+    expect(result_1.success?).to eq(false)
+    expect(result_1.errors).to match(
+      'date' => [:invalid_type],
+      'memo' => [:invalid_type]
+    )
+
+    result_2 = DryTypesTestingSchema.new.validate({})
+    expect(result_2.success?).to eq(false)
+    expect(result_2.errors).to match(
+      'date' => [:required_key_not_found],
+      'memo' => [:required_key_not_found]
+    )
+
+    result_3 = DryTypesTestingSchema.new.validate({ date: '123' })
+    expect(result_3.success?).to eq(false)
+    expect(result_3.errors).to match('memo' => [:required_key_not_found])
+
+    result_4 = DryTypesTestingSchema.new.validate({ memo: 123 })
+    expect(result_4.success?).to eq(false)
+    expect(result_4.errors).to match('date' => [:required_key_not_found])
+
+    result_5 = DryTypesTestingSchema.new.validate({ date: '123', memo: 123 })
+    expect(result_5.success?).to eq(true)
+  end
+
   specify 'smoke' do
+    SmartCore::Schema::Configuration.configure do |conf|
+      conf.type_system = :smart_types
+    end
+
     class MySchema < SmartCore::Schema
       strict!
 
@@ -194,11 +251,11 @@ RSpec.describe SmartCore::Schema do
 
     expect do # incompatible dsl (schema)
       Class.new(SmartCore::Schema) { schema { non_required } }
-    end.to raise_error(::NameError)
+    end.to raise_error(NameError)
 
     expect do # incompatible type
       Class.new(SmartCore::Schema) { schema { required(:kek).type(Object.new) } }
-    end.to raise_error(::SmartCore::Schema::ArgumentError)
+    end.to raise_error(SmartCore::Schema::ArgumentError)
   end
 end
 # rubocop:enable Naming/VariableNumber
