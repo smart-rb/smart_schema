@@ -17,6 +17,22 @@ RSpec.describe SmartCore::Schema do
       end
     end
 
+    expect do
+      Class.new(SmartCore::Schema) do
+        schema do
+          required(:mega).type(Object) # FAIL: dry-types requires Dry::Types::Type objects!
+        end
+      end
+    end.to raise_error(SmartCore::Schema::ArgumentError)
+
+    # expect do
+      # class SomeFailableSchema < SmartCore::Schema
+      #   schema do
+      #     requried(:pek).type(:kek)
+      #   end
+      # end
+    # end
+
     result_1 = DryTypesTestingSchema.new.validate({ date: 123, memo: '123' })
     expect(result_1.success?).to eq(false)
     expect(result_1.errors).to match(

@@ -167,6 +167,42 @@ Possible errors:
   - `:invalid_type` (existing key has invalid type);
   - `:required_key_not_found` (required key does not exist);
   - `:extra_key` (concrete key does not exist in schema);
+  
+
+## Type System Customization
+
+- supports `smart-types` (pre-configured by default);
+- supports `dry-types` (requires `dry-types` gem required in your project);
+- configuration has a global effect (single type-config for all Schema instances/classes)
+  - **NOTE**: this behavior will be reworked in future (mutliple type system support at once);
+
+### Type System Configuration and Usage
+
+```ruby
+SmartCore::Schema::Configuration.configure do |config|
+  config.type_system = :dry_types # :smart_types (:smart_types is used by default)
+end
+```
+
+```ruby
+# configure type aliases
+
+# - for smart-types
+SmartCore::Schema.type_system.type_alias(:integer, SmartCore::Types::Value::Integer)
+
+# - for dry-types
+SmartCore::Schema.type_system.type_alias(:integer, Dry::Types['integer'])
+```
+
+```ruby
+# dry-types usage
+class MySchemaWithDryTypes < SmartCore::Schema
+  schema do
+    required(:date).type(Dry::Types['string']) # object-style
+    required(:count).type(:integer) # alias-style 
+  end
+end
+```
 
 ---
 
