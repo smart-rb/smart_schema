@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 - An ability to chose the preferred type system (globally at the moment):
   - supports `smart-types` (by default);
   - supports `dry-types` (as a plugin);
+## Changed
+- *Ruby@3.3* is a minimal ruby version at the moment;
 
 # [0.11.0] - 2022-11-25
 ## Changed
