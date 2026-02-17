@@ -167,7 +167,6 @@ Possible errors:
   - `:invalid_type` (existing key has invalid type);
   - `:required_key_not_found` (required key does not exist);
   - `:extra_key` (concrete key does not exist in schema);
-  
 
 ## Type System Customization
 
