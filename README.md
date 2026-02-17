@@ -179,6 +179,15 @@ Possible errors:
 ### Type System Configuration and Usage
 
 ```ruby
+# IMPORTANT: inn order to use dry-types:
+# 1. you should install dry-types and require dry-types in your projecgts
+# 2. require dry_types plugin
+
+require 'dry-types'
+SmartCore::Schema.plugin(:dry_types) # fails if you try to enable this plugin without a pre-isntalled dry-types;
+```
+
+```ruby
 SmartCore::Schema::Configuration.configure do |config|
   config.type_system = :dry_types # :smart_types (:smart_types is used by default)
 end
@@ -189,12 +198,22 @@ end
 
 # - for smart-types
 SmartCore::Schema.type_system.type_alias(:integer, SmartCore::Types::Value::Integer)
+# smart-types has a list of pre-configured aliases. see lib/smart_core/schema/type_system/smart_types.rb
 
 # - for dry-types
 SmartCore::Schema.type_system.type_alias(:integer, Dry::Types['integer'])
+# dry-types has no pre-configured aliases.
 ```
 
 ```ruby
+# classic smart-types usage
+class MySchemaWithSmartTypes < SmartCore::Schema
+  schema do
+    required(:date).type(SmartCore::Types::Value::String) # object-style
+    required(:count).type(:integer) # alias-style
+  end
+end
+
 # dry-types usage
 class MySchemaWithDryTypes < SmartCore::Schema
   schema do
