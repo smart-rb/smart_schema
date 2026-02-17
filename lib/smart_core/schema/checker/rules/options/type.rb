@@ -62,17 +62,19 @@ class SmartCore::Schema::Checker::Rules::Options
     def resolve_required_type(required_type)
       unless required_type.is_a?(String) ||
              required_type.is_a?(Symbol) ||
-             required_type.is_a?(SmartCore::Types::Primitive)
+             required_type.is_a?(SmartCore::Schema.type_system.primitive_type_class)
         raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE)
-          Schema key type should be a type of string, symbol or SmartCore:Types::Primitive (got: #{required_type})
+          Schema key type should be a type of string, symbol or
+          #{SmartCore::Schema.type_system.primitive_type_class.name} (got: #{required_type})
         ERROR_MESSAGE
       end
 
-      if required_type.is_a?(SmartCore::Types::Primitive)
+      if required_type.is_a?(SmartCore::Schema.type_system.primitive_type_class)
         required_type
       else
         begin
-          SmartCore::Schema::Checker::Rules::TYPE_ALIASES.fetch(required_type.to_s)
+          SmartCore::Schema.type_system.type_from_alias(required_type)
+          # SmartCore::Schema::Checker::Rules::TYPE_ALIASES.fetch(required_type.to_s)
         rescue KeyError
           raise(SmartCore::Schema::ArgumentError, <<~ERROR_MESSAGE)
             Chosen schema key type is not supported or not registered (got #{required_type})

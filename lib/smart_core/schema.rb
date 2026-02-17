@@ -2,7 +2,6 @@
 
 require 'smart_core'
 require 'smart_core/types'
-require 'set'
 require 'forwardable'
 
 # @api pulic
@@ -13,6 +12,9 @@ module SmartCore
   class Schema
     require_relative 'schema/version'
     require_relative 'schema/errors'
+    require_relative 'schema/plugins'
+    require_relative 'schema/type_system'
+    require_relative 'schema/configuration'
     require_relative 'schema/key_control'
     require_relative 'schema/result'
     require_relative 'schema/checker'
@@ -20,6 +22,19 @@ module SmartCore
 
     # @since 0.1.0
     include SmartCore::Schema::DSL
+
+    # @sicnce 0.12.0
+    extend SmartCore::Schema::Plugins::AccessMixin
+
+    class << self
+      # NOTE/TODO: will be totally reworked with dynamic schema-instance-configurated type-system
+      #
+      # @api public
+      # @since 0.12.0
+      def type_system
+        SmartCore::Schema::TypeSystem.resolve(SmartCore::Schema::Configuration[:type_system])
+      end
+    end
 
     # @param verifiable_hash [Hash<String|Symbol,Any>]
     # @return [Boolean]

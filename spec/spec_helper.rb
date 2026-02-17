@@ -14,6 +14,11 @@ require 'bundler/setup'
 require 'smart_core/schema'
 require 'pry'
 
+# NOTE: test dry-types plugin
+# NOTE/TODO: will be reworked with better tests segregated by separated gemspecs
+require 'dry-types'
+SmartCore::Schema.plugin(:dry_types)
+
 RSpec.configure do |config|
   Kernel.srand config.seed
   config.disable_monkey_patching!

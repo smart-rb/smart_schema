@@ -18,8 +18,10 @@ class SmartCore::Schema::Checker::Rules::Required < SmartCore::Schema::Checker::
   # @api private
   # @since 0.1.0
   # @version 0.3.0
+  # rubocop:disable Style/SuperArguments
   def initialize(root_reconciler, schema_key, &nested_definitions)
     super(root_reconciler, schema_key, &nested_definitions)
     @requirement = SmartCore::Schema::Checker::Rules::Requirement::Required.new(self)
   end
+  # rubocop:enable Style/SuperArguments
 end
