@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+# [0.12.2] - 2026-02-18
+- Empty release for the gem republishing;
+
 # [0.12.1] - 2026-02-18
 ## Fixed
 - Nested schemas requires :hash type for their schema key, but

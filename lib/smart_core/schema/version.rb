@@ -7,8 +7,8 @@ module SmartCore
     #
     # @api public
     # @since 0.1.0
-    # @version 0.12.1
-    VERSION = '0.12.1'
+    # @version 0.12.2
+    VERSION = '0.12.2'
   end
   # rubocop:enable Style/StaticClass
 end
