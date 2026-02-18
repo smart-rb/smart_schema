@@ -48,12 +48,20 @@ module SmartCore::Schema::TypeSystem
         ::Dry::Types::Any
       end
 
-      # @return [::Dry::Types::Type]
+      # @return [Class<::Dry::Types::Type>]
       #
       # @api private
       # @since 0.12.0
       def primitive_type_class
         ::Dry::Types::Type
+      end
+
+      # @return [::Dry::Types::Type]
+      #
+      # @api private
+      # @since 0.12.1
+      def hash_type_object_for_nested_schemas
+        ::Dry::Types['hash']
       end
 
       # @param type [::Dry::Types::Type]

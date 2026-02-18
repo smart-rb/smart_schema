@@ -95,7 +95,7 @@ class SmartCore::Schema::Checker::Rules::Base
   #
   # @api private
   # @since 0.1.0
-  # @version 0.3.0
+  # @version 0.12.1
   def define_nested_reconciler(&nested_definitions)
     return unless block_given?
 
@@ -105,6 +105,6 @@ class SmartCore::Schema::Checker::Rules::Base
       constructor.append_definitions(@nested_reconciler, &nested_definitions)
     end
 
-    type(:hash).filled
+    type(SmartCore::Schema.type_system.hash_type_object_for_nested_schemas).filled
   end
 end

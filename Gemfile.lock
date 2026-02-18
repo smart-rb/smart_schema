@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    smart_schema (0.12.0)
+    smart_schema (0.12.1)
       qonfig (~> 0.30)
       smart_engine (~> 0.17)
       smart_types (~> 0.8)
@@ -184,7 +184,7 @@ PLATFORMS
 DEPENDENCIES
   armitage-rubocop (~> 1.81)
   bundler
-  dry-types
+  dry-types (~> 1.9)
   pry (~> 0.16)
   pry-doc (~> 1.7)
   rake (~> 13.3)
@@ -251,7 +251,7 @@ CHECKSUMS
   simplecov-html (0.13.2) sha256=bd0b8e54e7c2d7685927e8d6286466359b6f16b18cb0df47b508e8d73c777246
   simplecov_json_formatter (0.1.4) sha256=529418fbe8de1713ac2b2d612aa3daa56d316975d307244399fa4838c601b428
   smart_engine (0.17.0) sha256=33321745063737a9262f53ef7b5b040d65f8d8f5a5230ac6d3c2461b0404a52b
-  smart_schema (0.12.0)
+  smart_schema (0.12.1)
   smart_types (0.8.0) sha256=87879face377e4738e887f4b34657f8ed9572b8d22bd2deb6028bb45261a5bb7
   tsort (0.2.0) sha256=9650a793f6859a43b6641671278f79cfead60ac714148aabe4e3f0060480089f
   tzinfo (2.0.6) sha256=8daf828cc77bcf7d63b0e3bdb6caa47e2272dcfaf4fbfe46f8c3a9df087a829b
