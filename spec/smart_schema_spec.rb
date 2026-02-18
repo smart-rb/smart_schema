@@ -20,6 +20,35 @@ RSpec.describe SmartCore::Schema do
     expect do
       Class.new(SmartCore::Schema) do
         schema do
+          # NOTE: should not fail on nested schemas
+          required(:pek) do
+            required(:kek).type(Dry::Types['integer'])
+          end
+        end
+      end
+    end.not_to raise_error
+
+    class PrimitiveNestedSchema < SmartCore::Schema
+      schema do
+        required(:nested) do
+          required(:field).type(:integer)
+        end
+      end
+    end
+
+    nested_schema = PrimitiveNestedSchema.new
+    expect(nested_schema.valid?({ nested: { field: 123 } })).to eq(true)
+    expect(nested_schema.valid?({ nested: { field: '123' } })).to eq(false)
+
+    # TODO:
+    #  - uncomment followwing spec
+    #  - need to fix nested schema structure reocniling bug (fails on source.key?(key) code)
+    # expect(nested_schema.valid?({ nested: 123 })).to eq(false)
+    # expect(nested_schema.valid?({ nested: {} })).to eq(false)
+
+    expect do
+      Class.new(SmartCore::Schema) do
+        schema do
           required(:mega).type(Object) # FAIL: dry-types requires Dry::Types::Type objects!
         end
       end

@@ -1,6 +1,30 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+# [0.12.1] - 2026-02-18
+## Fixed
+- Nested schemas requires :hash type for their schema key, but
+  this type is resolved from the type alias, not from the type object.
+  - Added an object reference to the hash primitive in `type interop` subsystem (interop + abstract factory);
+  - each type system should provide hash type class:
+    - smart-core provides/recognizes nested structures with `SmartCore::Types::Hash`;
+    - dry-types provides/recognizes nested structures with `Dry::Types['hash']`;
+
+```ruby
+# before:
+
+require 'dry-types'
+SmartCore::Schema::Configuration.configure { |c| c.type_system = :dry_types }
+
+class MySchema < SmartCore::Schema
+  schema do
+    requried(:some_data) do # <- previously: failed on unrecognized type with :hash alias
+      requireqd(:some_key).type(Dry::Types['string'])
+    end
+  end
+end
+```
+
 # [0.12.0] - 2026-02-17
 ## Added
 - Plugin ecosystem;

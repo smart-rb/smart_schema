@@ -43,6 +43,18 @@ class SmartCore::Schema::TypeSystem::Interop::AbstractFactory
     # @since 0.12.0
     def prevent_incompatible_type!(type); end
 
+    # @return [Class]
+    #
+    # @api private
+    # @since 0.12.1
+    def primitive_type_class; end
+
+    # @return [Any]
+    #
+    # @api private
+    # @since 0.12.1
+    def hash_type_object_for_nested_schemas; end
+
     private
 
     # @param type [Any]

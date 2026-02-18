@@ -56,6 +56,14 @@ module SmartCore::Schema::TypeSystem
         SmartCore::Types::Primitive
       end
 
+      # @return [SmartCore::Types::Value::Hash]
+      #
+      # @api private
+      # @since 0.12.1
+      def hash_type_object_for_nested_schemas
+        SmartCore::Types::Value::Hash
+      end
+
       # @param type [SmartCore::Types::Primitive]
       # @return [SmartCore::Schema::TypeSystem::SmartTypes::Operation::Validate]
       #

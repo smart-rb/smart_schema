@@ -47,6 +47,14 @@ class SmartCore::Schema::TypeSystem::Interop
     def primitive_type_class
       self::AbstractFactory.primitive_type_class
     end
+
+    # @return [Any]
+    #
+    # @api private
+    # @since 0.12.1
+    def hash_type_object_for_nested_schemas
+      self::AbstractFactory.hash_type_object_for_nested_schemas
+    end
   end
 
   # @return [String]
